@@ -1,12 +1,13 @@
-
 import { useState } from "react";
 import { toast } from "@/hooks/use-toast";
 import { RhythmItem, OrgDetail } from "@/types/rhythm";
 import { generateMarkdown } from "@/utils/rhythmUtils";
+import { getRhythmData, getHeaderInfo, parseOrgDetails } from "@/utils/rhythmParser";
 import TemplateSelector from "@/components/rhythm/TemplateSelector";
 import OrganizationDetails from "@/components/rhythm/OrganizationDetails";
 import RhythmForm from "@/components/rhythm/RhythmForm";
 import RhythmList from "@/components/rhythm/RhythmList";
+import FileUpload from "@/components/FileUpload";
 
 const RhythmBuilder = () => {
   const [organizationName, setOrganizationName] = useState("");
@@ -22,6 +23,41 @@ const RhythmBuilder = () => {
   });
   const [showCustomCategory, setShowCustomCategory] = useState(false);
   const [showCustomFrequency, setShowCustomFrequency] = useState(false);
+
+  const handleFileUpload = (content: string) => {
+    try {
+      const header = getHeaderInfo(content);
+      setOrganizationName(header.replace(" - Rhythm of Business", ""));
+      
+      const details = parseOrgDetails(content);
+      setOrgDetails(details);
+      
+      const sections = getRhythmData(content);
+      const allRhythms: RhythmItem[] = sections.flatMap(section => 
+        section.items.map(item => ({
+          name: item.name,
+          category: section.title,
+          attendees: item.attendees,
+          duration: item.duration.toString(),
+          frequency: item.frequency,
+          link: item.link || ""
+        }))
+      );
+      
+      setRhythms(allRhythms);
+      
+      toast({
+        title: "File Imported",
+        description: "Your rhythm file has been successfully imported."
+      });
+    } catch (error) {
+      toast({
+        title: "Import Error",
+        description: "Failed to parse the markdown file. Please check the format.",
+        variant: "destructive"
+      });
+    }
+  };
 
   const addRhythm = () => {
     if (!currentRhythm.name || !currentRhythm.category || !currentRhythm.attendees || !currentRhythm.duration || !currentRhythm.frequency) {
@@ -145,7 +181,10 @@ const RhythmBuilder = () => {
           <p className="text-gray-600">Create and export your organization's rhythm of business</p>
         </div>
 
-        <TemplateSelector loadTemplate={loadTemplate} />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <TemplateSelector loadTemplate={loadTemplate} />
+          <FileUpload onFileUpload={handleFileUpload} />
+        </div>
 
         <OrganizationDetails
           organizationName={organizationName}
