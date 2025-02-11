@@ -16,6 +16,14 @@ export interface RhythmItem {
 }
 
 /**
+ * Represents organization details like repos and channels
+ */
+export interface OrgDetail {
+  type: string;     // Type of detail (e.g., "Team Repos", "Slack Channels")
+  url: string;      // URL for the detail
+}
+
+/**
  * List of valid frequency values for rhythm items
  */
 export const FREQUENCIES = [
@@ -51,3 +59,4 @@ export interface RhythmDetail {
   duration: number;  // Duration in minutes
   frequency: string; // Frequency of occurrence
 }
+

@@ -4,6 +4,11 @@ export const organizations = [
     id: 'acme-corp',
     content: `# Acme Corp - Rhythm of Business
 
+### Organization Details
+- Team Repos: https://github.com/acme-corp
+- Slack Channels: https://acme-corp.slack.com/channels/team
+- Documentation: https://docs.acme-corp.com
+
 ## Planning
 - Sprint Planning [Actions Team] [90 min] [bi-weekly] https://meeting-link/sprint
 - Strategic Planning [EPD LT] [240 min] [annual] https://meeting-link/strategy-annual
@@ -34,6 +39,11 @@ export const organizations = [
   {
     id: 'tech-innovators',
     content: `# Tech Innovators - Team Rhythm
+
+### Organization Details
+- Team Repos: https://github.com/tech-innovators
+- Slack Channels: https://tech-innovators.slack.com/channels/engineering
+- Wiki: https://wiki.tech-innovators.com
 
 ## Team Meetings
 - Engineering Standup [Dev Team] [15 min] [daily] https://meeting-link/dev-standup
@@ -66,6 +76,11 @@ export const organizations = [
     id: 'startup-labs',
     content: `# Startup Labs - Growth Rhythm
 
+### Organization Details
+- Team Repos: https://github.com/startup-labs
+- Slack Channels: https://startup-labs.slack.com/channels/growth
+- Notion: https://startup-labs.notion.site
+
 ## Business Reviews
 - Revenue Review [Leadership] [90 min] [monthly] https://meeting-link/revenue
 - Team Metrics [Team Leads] [60 min] [weekly] https://meeting-link/metrics
@@ -93,3 +108,4 @@ export const organizations = [
 - Strategy Sync [All Teams] [90 min] [monthly] https://meeting-link/strategy`
   }
 ];
+

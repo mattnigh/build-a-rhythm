@@ -1,7 +1,9 @@
+
 import { useState } from "react";
 import OrganizationHeader from "@/components/OrganizationHeader";
 import RhythmDisplay from "@/components/RhythmDisplay";
 import { organizations } from "@/data/organizations";
+import { parseOrgDetails } from "@/utils/rhythmUtils";
 import {
   Select,
   SelectContent,
@@ -21,11 +23,17 @@ const TeamRhythms = () => {
     return headerLine ? headerLine.replace('# ', '') : "Rhythm Minder";
   };
 
+  // Parse organization details
+  const orgDetails = parseOrgDetails(selectedOrg.content);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-rhythm-50 via-white to-rhythm-50">
       <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 animate-fade-in-slow">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <OrganizationHeader name={getHeaderInfo(selectedOrg.content)} />
+          <OrganizationHeader 
+            name={getHeaderInfo(selectedOrg.content)} 
+            details={orgDetails}
+          />
           <Select
             value={selectedOrgId}
             onValueChange={(value) => setSelectedOrgId(value)}
@@ -49,3 +57,4 @@ const TeamRhythms = () => {
 };
 
 export default TeamRhythms;
+
