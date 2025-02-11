@@ -60,12 +60,13 @@ const OrganizationDetails = ({
         
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Organization Name
+            Org or Team Name <span className="text-red-500">*</span>
           </label>
           <Input
-            placeholder="Enter organization name"
+            placeholder="Enter organization or team name"
             value={organizationName}
             onChange={(e) => setOrganizationName(e.target.value)}
+            required
           />
         </div>
 

@@ -60,10 +60,11 @@ const RhythmBuilder = () => {
   };
 
   const addRhythm = () => {
-    if (!currentRhythm.name || !currentRhythm.category || !currentRhythm.attendees || !currentRhythm.duration || !currentRhythm.frequency) {
+    // Remove validation for other fields, only check organization name
+    if (!currentRhythm.name) {
       toast({
-        title: "Missing Fields",
-        description: "Please fill in all required fields before adding a rhythm.",
+        title: "Missing Name",
+        description: "Please provide a name for the rhythm.",
         variant: "destructive"
       });
       return;
@@ -100,16 +101,7 @@ const RhythmBuilder = () => {
     if (!organizationName) {
       toast({
         title: "Missing Organization Name",
-        description: "Please provide an organization name before exporting.",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    if (rhythms.length === 0) {
-      toast({
-        title: "No Rhythms Added",
-        description: "Please add at least one rhythm before exporting.",
+        description: "Please provide an organization or team name before exporting.",
         variant: "destructive"
       });
       return;
@@ -170,4 +162,3 @@ const RhythmBuilder = () => {
 };
 
 export default RhythmBuilder;
-
