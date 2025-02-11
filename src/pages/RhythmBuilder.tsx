@@ -37,6 +37,15 @@ const FREQUENCIES = [
   "ad hoc"
 ];
 
+const TEAM_SIZE_TEMPLATES = [
+  { label: "Team of 4-15", value: "team-4-15" },
+  { label: "Team of 15-30", value: "team-15-30" },
+  { label: "Team of 30-50", value: "team-30-50" },
+  { label: "Team of 50-150", value: "team-50-150" },
+  { label: "Team of 150-400", value: "team-150-400" },
+  { label: "Team of 500+", value: "team-500-plus" }
+];
+
 const RhythmBuilder = () => {
   const [organizationName, setOrganizationName] = useState("");
   const [rhythms, setRhythms] = useState<RhythmItem[]>([]);
@@ -141,6 +150,47 @@ const RhythmBuilder = () => {
     });
   };
 
+  const loadTemplate = async (templateSize: string) => {
+    try {
+      const response = await fetch(`/src/data/templates/${templateSize}.md`);
+      const templateContent = await response.text();
+      
+      const lines = templateContent.split('\n');
+      const rhythmsToAdd: RhythmItem[] = [];
+      let currentCategory = "";
+      
+      lines.forEach(line => {
+        if (line.startsWith('## ')) {
+          currentCategory = line.replace('## ', '').trim();
+        } else if (line.startsWith('- ')) {
+          const match = line.match(/- (.*?)\[(.*?)\]\s*\[(.*?)\]\s*\[(.*?)\](.*)/);
+          if (match) {
+            rhythmsToAdd.push({
+              name: match[1].trim(),
+              category: currentCategory,
+              attendees: match[2].trim(),
+              duration: match[3].trim(),
+              frequency: match[4].trim(),
+              link: match[5]?.trim() || ""
+            });
+          }
+        }
+      });
+      
+      setRhythms(rhythmsToAdd);
+      toast({
+        title: "Template Loaded",
+        description: "The template has been successfully loaded."
+      });
+    } catch (error) {
+      toast({
+        title: "Error Loading Template",
+        description: "Failed to load the template. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-rhythm-50 via-white to-rhythm-50 p-8">
       <div className="container max-w-4xl mx-auto space-y-8">
@@ -152,15 +202,36 @@ const RhythmBuilder = () => {
         <Card className="p-6">
           <div className="space-y-4">
             <h2 className="text-xl font-semibold text-gray-900">Organization Details</h2>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Organization Name
-              </label>
-              <Input
-                placeholder="Enter organization name"
-                value={organizationName}
-                onChange={(e) => setOrganizationName(e.target.value)}
-              />
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Organization Name
+                </label>
+                <Input
+                  placeholder="Enter organization name"
+                  value={organizationName}
+                  onChange={(e) => setOrganizationName(e.target.value)}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Load Template by Team Size
+                </label>
+                <Select
+                  onValueChange={(value) => loadTemplate(value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select team size" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {TEAM_SIZE_TEMPLATES.map((template) => (
+                      <SelectItem key={template.value} value={template.value}>
+                        {template.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           </div>
         </Card>
