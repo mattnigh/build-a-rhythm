@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { toast } from "@/hooks/use-toast";
 import { RhythmItem, OrgDetail } from "@/types/rhythm";
@@ -134,9 +135,12 @@ const RhythmBuilder = () => {
 
   const loadTemplate = async (templateSize: string) => {
     try {
-      const response = await fetch(`/src/data/templates/${templateSize}.md`);
-      const templateContent = await response.text();
+      const response = await fetch(`/build-a-rhythm/templates/${templateSize}.md`);
+      if (!response.ok) {
+        throw new Error(`Failed to load template: ${response.statusText}`);
+      }
       
+      const templateContent = await response.text();
       const lines = templateContent.split('\n');
       const rhythmsToAdd: RhythmItem[] = [];
       let currentCategory = "";
@@ -165,6 +169,7 @@ const RhythmBuilder = () => {
         description: "The template has been successfully loaded."
       });
     } catch (error) {
+      console.error('Template loading error:', error);
       toast({
         title: "Error Loading Template",
         description: "Failed to load the template. Please try again.",
@@ -212,3 +217,4 @@ const RhythmBuilder = () => {
 };
 
 export default RhythmBuilder;
+
