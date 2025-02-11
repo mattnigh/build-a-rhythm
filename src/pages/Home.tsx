@@ -12,11 +12,6 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-rhythm-50 via-white to-rhythm-50">
       <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
-        {/* Banner Image */}
-        <div className="w-full h-[400px] rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center">
-          <div className="text-gray-400">Banner Image Placeholder</div>
-        </div>
-
         {/* Welcome Section */}
         <div className="text-center space-y-4">
           <h1 className="text-4xl font-bold text-gray-900">Welcome to Rhythm Minder</h1>
