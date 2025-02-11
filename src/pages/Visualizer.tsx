@@ -24,7 +24,6 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-import { ChartContainer, ChartTooltip } from "@/components/ui/chart";
 
 const getRhythmData = (content: string) => {
   const lines = content.split('\n');
@@ -41,13 +40,14 @@ const getRhythmData = (content: string) => {
         items: []
       };
     } else if (line.startsWith('- ')) {
-      const match = line.match(/- (.*?)\[(.*?)\]\s*\[(.*?)\](.*)/);
+      const match = line.match(/- (.*?)\[(.*?)\]\s*\[(.*?)\]\s*\[(.*?)\](.*)/);
       if (match) {
         currentSection.items.push({
           name: match[1].trim(),
           attendees: match[2].trim(),
           duration: parseInt(match[3]),
-          link: match[4]?.trim()
+          frequency: match[4].trim(),
+          link: match[5]?.trim()
         });
       }
     }
@@ -58,62 +58,65 @@ const getRhythmData = (content: string) => {
   return sections;
 };
 
+const getFrequencyMultiplier = (frequency: string) => {
+  switch (frequency.toLowerCase()) {
+    case 'daily':
+      return { monthly: 20, quarterly: 60, annual: 240 }; // Assuming 20 working days per month
+    case 'weekly':
+      return { monthly: 4, quarterly: 12, annual: 48 };
+    case 'bi-weekly':
+      return { monthly: 2, quarterly: 6, annual: 24 };
+    case 'monthly':
+      return { monthly: 1, quarterly: 3, annual: 12 };
+    case 'quarterly':
+      return { monthly: 1/3, quarterly: 1, annual: 4 };
+    case 'annual':
+      return { monthly: 1/12, quarterly: 1/4, annual: 1 };
+    case 'ad hoc':
+      return { monthly: 1/2, quarterly: 1.5, annual: 6 }; // Assuming ad hoc meetings happen roughly 6 times a year
+    default:
+      return { monthly: 0, quarterly: 0, annual: 0 };
+  }
+};
+
 const calculateTimeMetrics = (rhythmData: any[]) => {
-  const monthlyTime = {
-    Daily: 0,
-    Weekly: 0,
-    'Bi-Weekly': 0,
-    Monthly: 0,
-    Quarterly: 0,
-    Annual: 0
+  const categoryTimes = {
+    monthly: {},
+    quarterly: {},
+    annual: {}
   };
 
-  const quarterlyTime = { ...monthlyTime };
-  const annualTime = { ...monthlyTime };
-
   rhythmData.forEach(section => {
-    const rhythmType = section.title.split(' ')[0];
-    const totalMinutes = section.items.reduce((acc: number, item: any) => acc + item.duration, 0);
+    const category = section.title;
+    
+    section.items.forEach(item => {
+      const multipliers = getFrequencyMultiplier(item.frequency);
+      const duration = item.duration;
 
-    // Calculate time based on rhythm frequency
-    switch (rhythmType.toLowerCase()) {
-      case 'daily':
-        monthlyTime.Daily += totalMinutes * 20; // Assuming 20 working days
-        quarterlyTime.Daily += totalMinutes * 60;
-        annualTime.Daily += totalMinutes * 240;
-        break;
-      case 'weekly':
-        monthlyTime.Weekly += totalMinutes * 4;
-        quarterlyTime.Weekly += totalMinutes * 12;
-        annualTime.Weekly += totalMinutes * 48;
-        break;
-      case 'bi-weekly':
-        monthlyTime['Bi-Weekly'] += totalMinutes * 2;
-        quarterlyTime['Bi-Weekly'] += totalMinutes * 6;
-        annualTime['Bi-Weekly'] += totalMinutes * 24;
-        break;
-      case 'monthly':
-        monthlyTime.Monthly += totalMinutes;
-        quarterlyTime.Monthly += totalMinutes * 3;
-        annualTime.Monthly += totalMinutes * 12;
-        break;
-      case 'quarterly':
-        monthlyTime.Quarterly += totalMinutes / 3;
-        quarterlyTime.Quarterly += totalMinutes;
-        annualTime.Quarterly += totalMinutes * 4;
-        break;
-      case 'annual':
-        monthlyTime.Annual += totalMinutes / 12;
-        quarterlyTime.Annual += totalMinutes / 4;
-        annualTime.Annual += totalMinutes;
-        break;
-    }
+      // Initialize category if it doesn't exist
+      ['monthly', 'quarterly', 'annual'].forEach(period => {
+        if (!categoryTimes[period][category]) {
+          categoryTimes[period][category] = 0;
+        }
+        categoryTimes[period][category] += duration * multipliers[period];
+      });
+    });
   });
 
+  // Convert to array format for charts
   return {
-    monthly: Object.entries(monthlyTime).map(([name, value]) => ({ name, minutes: Math.round(value) })),
-    quarterly: Object.entries(quarterlyTime).map(([name, value]) => ({ name, minutes: Math.round(value) })),
-    annual: Object.entries(annualTime).map(([name, value]) => ({ name, minutes: Math.round(value) }))
+    monthly: Object.entries(categoryTimes.monthly).map(([name, minutes]) => ({ 
+      name, 
+      minutes: Math.round(minutes as number)
+    })),
+    quarterly: Object.entries(categoryTimes.quarterly).map(([name, minutes]) => ({ 
+      name, 
+      minutes: Math.round(minutes as number)
+    })),
+    annual: Object.entries(categoryTimes.annual).map(([name, minutes]) => ({ 
+      name, 
+      minutes: Math.round(minutes as number)
+    }))
   };
 };
 
@@ -126,7 +129,13 @@ const TimeChart = ({ data, title }: { data: any[], title: string }) => (
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
+          <XAxis 
+            dataKey="name" 
+            angle={-45}
+            textAnchor="end"
+            height={70}
+            interval={0}
+          />
           <YAxis label={{ value: 'Minutes', angle: -90, position: 'insideLeft' }} />
           <Tooltip />
           <Legend />
@@ -153,7 +162,7 @@ const Visualizer = () => {
   return (
     <div className="container max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-        <h1 className="text-2xl font-semibold text-gray-900">Time Analysis</h1>
+        <h1 className="text-2xl font-semibold text-gray-900">Category Time Analysis</h1>
         <Select
           value={selectedOrgId}
           onValueChange={(value) => setSelectedOrgId(value)}
@@ -172,9 +181,9 @@ const Visualizer = () => {
       </div>
 
       <div className="grid grid-cols-1 gap-8">
-        <TimeChart data={timeMetrics.monthly} title="Monthly Time Distribution (minutes)" />
-        <TimeChart data={timeMetrics.quarterly} title="Quarterly Time Distribution (minutes)" />
-        <TimeChart data={timeMetrics.annual} title="Annual Time Distribution (minutes)" />
+        <TimeChart data={timeMetrics.monthly} title="Monthly Time per Category (minutes)" />
+        <TimeChart data={timeMetrics.quarterly} title="Quarterly Time per Category (minutes)" />
+        <TimeChart data={timeMetrics.annual} title="Annual Time per Category (minutes)" />
       </div>
     </div>
   );
