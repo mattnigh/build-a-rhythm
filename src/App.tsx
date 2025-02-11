@@ -18,7 +18,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      <BrowserRouter basename="/build-a-rhythm">
         <Navigation />
         <Routes>
           <Route path="/" element={<Home />} />
