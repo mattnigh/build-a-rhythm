@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -7,6 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card } from "@/components/ui/card";
 import { toast } from "@/components/ui/use-toast";
 import { Plus, Download, Trash2 } from "lucide-react";
+import { organizations } from "@/data/organizations";
 
 interface RhythmItem {
   name: string;
@@ -17,13 +17,17 @@ interface RhythmItem {
   link: string;
 }
 
-const CATEGORIES = [
-  "Planning",
-  "Business Reviews",
-  "1:1s",
-  "Team Meetings",
-  "General Meetings"
-];
+// Dynamically extract unique categories from organizations data
+const CATEGORIES = Array.from(
+  new Set(
+    organizations.flatMap(org => {
+      const lines = org.content.split('\n');
+      return lines
+        .filter(line => line.startsWith('## '))
+        .map(line => line.replace('## ', '').trim());
+    })
+  )
+).sort();
 
 const FREQUENCIES = [
   "daily",
