@@ -4,7 +4,6 @@ import { toast } from "@/hooks/use-toast";
 import { RhythmItem, OrgDetail } from "@/types/rhythm";
 import { generateMarkdown } from "@/utils/rhythmUtils";
 import { getRhythmData, getHeaderInfo, parseOrgDetails } from "@/utils/rhythmParser";
-import TemplateSelector from "@/components/rhythm/TemplateSelector";
 import OrganizationDetails from "@/components/rhythm/OrganizationDetails";
 import RhythmForm from "@/components/rhythm/RhythmForm";
 import RhythmList from "@/components/rhythm/RhythmList";
@@ -133,61 +132,6 @@ const RhythmBuilder = () => {
     });
   };
 
-  const loadTemplate = async (templateSize: string) => {
-    try {
-      console.log('Loading template:', templateSize);
-      // Use window.location.origin to get the base URL in production
-      const baseUrl = import.meta.env.PROD ? '/build-a-rhythm' : '';
-      const templatePath = `${baseUrl}/templates/team-${templateSize}.md`;
-      console.log('Template path:', templatePath);
-      
-      const response = await fetch(templatePath);
-      console.log('Response status:', response.status);
-      
-      if (!response.ok) {
-        throw new Error(`Failed to load template: ${response.statusText}`);
-      }
-      
-      const templateContent = await response.text();
-      console.log('Template content length:', templateContent.length);
-      
-      const lines = templateContent.split('\n');
-      const rhythmsToAdd: RhythmItem[] = [];
-      let currentCategory = "";
-      
-      lines.forEach(line => {
-        if (line.startsWith('## ')) {
-          currentCategory = line.replace('## ', '').trim();
-        } else if (line.startsWith('- ')) {
-          const match = line.match(/- (.*?)\[(.*?)\]\s*\[(.*?)\]\s*\[(.*?)\](.*)/);
-          if (match) {
-            rhythmsToAdd.push({
-              name: match[1].trim(),
-              category: currentCategory,
-              attendees: match[2].trim(),
-              duration: match[3].trim(),
-              frequency: match[4].trim(),
-              link: match[5]?.trim() || ""
-            });
-          }
-        }
-      });
-      
-      setRhythms(rhythmsToAdd);
-      toast({
-        title: "Template Loaded",
-        description: "The template has been successfully loaded."
-      });
-    } catch (error) {
-      console.error('Template loading error:', error);
-      toast({
-        title: "Error Loading Template",
-        description: "Failed to load the template. Please try again.",
-        variant: "destructive"
-      });
-    }
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-rhythm-50 via-white to-rhythm-50 p-8">
       <div className="container max-w-4xl mx-auto space-y-8">
@@ -197,7 +141,6 @@ const RhythmBuilder = () => {
         </div>
 
         <FileUpload onFileUpload={handleFileUpload} />
-        <TemplateSelector loadTemplate={loadTemplate} />
 
         <OrganizationDetails
           organizationName={organizationName}
@@ -227,3 +170,4 @@ const RhythmBuilder = () => {
 };
 
 export default RhythmBuilder;
+
