@@ -59,10 +59,14 @@ const Visualizer = () => {
   };
 
   const orgsToDisplay = getOrganizationsToDisplay();
-  const totalOrgs = orgsToDisplay.length;
-  const baseRadius = selectedOrgId === "all" ? 200 : 300; // Smaller radius when showing all
-  const center = baseRadius + 100;
-  const size = (center + baseRadius) * 2;
+  const rhythmColors = {
+    daily: 'bg-blue-100 border-blue-300',
+    weekly: 'bg-green-100 border-green-300',
+    monthly: 'bg-yellow-100 border-yellow-300',
+    quarterly: 'bg-red-100 border-red-300',
+    annual: 'bg-purple-100 border-purple-300',
+    'bi-weekly': 'bg-indigo-100 border-indigo-300'
+  };
 
   return (
     <div className="container max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
@@ -85,120 +89,53 @@ const Visualizer = () => {
           </SelectContent>
         </Select>
       </div>
-      <div className="w-full overflow-x-auto">
-        <svg width={size} height={size} className="mx-auto">
-          {orgsToDisplay.map((org, orgIndex) => {
-            const rhythmData = getRhythmData(org.content);
-            const totalSections = rhythmData.length;
-            const angleOffset = selectedOrgId === "all" ? (2 * Math.PI * orgIndex) / totalOrgs : 0;
 
-            return (
-              <g key={org.id}>
-                {selectedOrgId === "all" && (
-                  <text
-                    x={center}
-                    y={40 + (orgIndex * 20)}
-                    textAnchor="middle"
-                    className="text-sm font-medium"
-                    fill="#374151"
-                  >
-                    {getHeaderInfo(org.content)}
-                  </text>
-                )}
+      <div className="grid grid-cols-1 gap-8">
+        {orgsToDisplay.map((org) => {
+          const rhythmData = getRhythmData(org.content);
+          return (
+            <div key={org.id} className="bg-white rounded-lg shadow-lg p-6">
+              <h2 className="text-xl font-semibold mb-6">{getHeaderInfo(org.content)}</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {rhythmData.map((section, sectionIndex) => {
-                  const sectionAngle = (2 * Math.PI) / totalSections;
-                  const startAngle = sectionIndex * sectionAngle + angleOffset;
-                  const items = section.items.length;
-                  
-                  return section.items.map((item, itemIndex) => {
-                    const itemAngle = sectionAngle / (items + 1);
-                    const angle = startAngle + (itemIndex + 1) * itemAngle;
-                    
-                    const itemRadius = baseRadius - (itemIndex * 15); // Reduced spacing between items
-                    
-                    const x = center + itemRadius * Math.cos(angle - Math.PI / 2);
-                    const y = center + itemRadius * Math.sin(angle - Math.PI / 2);
-                    
-                    const frequency = section.title.toLowerCase();
-                    const color = frequency.includes('daily') ? 'rgb(147, 197, 253)' :
-                                frequency.includes('weekly') ? 'rgb(167, 243, 208)' :
-                                frequency.includes('monthly') ? 'rgb(253, 230, 138)' :
-                                frequency.includes('quarterly') ? 'rgb(252, 165, 165)' :
-                                'rgb(216, 180, 254)';
+                  const frequency = section.title.toLowerCase();
+                  const colorClass = Object.entries(rhythmColors).find(([key]) => 
+                    frequency.includes(key)
+                  )?.[1] || 'bg-gray-100 border-gray-300';
 
-                    return (
-                      <g key={`${sectionIndex}-${itemIndex}`}>
-                        <rect
-                          x={x - 50}
-                          y={y - 30}
-                          width="100"
-                          height="60"
-                          rx="8"
-                          fill={color}
-                          fillOpacity="0.7"
-                        />
-                        <text
-                          x={x}
-                          y={y - 12}
-                          textAnchor="middle"
-                          alignmentBaseline="middle"
-                          className="text-[10px] font-medium"
-                          fill="#374151"
-                        >
-                          {item.name}
-                        </text>
-                        <text
-                          x={x}
-                          y={y + 3}
-                          textAnchor="middle"
-                          alignmentBaseline="middle"
-                          className="text-[8px]"
-                          fill="#6B7280"
-                        >
-                          {item.attendees}
-                        </text>
-                        <text
-                          x={x}
-                          y={y + 18}
-                          textAnchor="middle"
-                          alignmentBaseline="middle"
-                          className="text-[8px]"
-                          fill="#6B7280"
-                        >
-                          {item.duration}
-                        </text>
-                      </g>
-                    );
-                  });
+                  return (
+                    <div 
+                      key={sectionIndex}
+                      className="relative"
+                    >
+                      <div className="mb-3 text-sm font-medium text-gray-900">
+                        {section.title}
+                      </div>
+                      <div className="space-y-2">
+                        {section.items.map((item, itemIndex) => (
+                          <div
+                            key={itemIndex}
+                            className={`p-3 rounded-lg border ${colorClass} transition-all hover:shadow-md`}
+                          >
+                            <div className="font-medium text-gray-900">
+                              {item.name}
+                            </div>
+                            <div className="text-sm text-gray-600">
+                              {item.attendees} • {item.duration}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  );
                 })}
-                <circle
-                  cx={center}
-                  cy={center}
-                  r="60"
-                  fill="white"
-                  stroke="#E5E7EB"
-                  strokeWidth="2"
-                />
-                {selectedOrgId !== "all" && (
-                  <text
-                    x={center}
-                    y={center}
-                    textAnchor="middle"
-                    alignmentBaseline="middle"
-                    className="text-lg font-semibold"
-                    fill="#374151"
-                  >
-                    Rhythm
-                  </text>
-                )}
-              </g>
-            );
-          })}
-        </svg>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
 };
 
 export default Visualizer;
-
