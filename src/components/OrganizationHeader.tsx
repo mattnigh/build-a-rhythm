@@ -14,7 +14,7 @@ const OrganizationHeader = ({ name }: OrganizationHeaderProps) => {
           <Building2 className="w-6 h-6 text-rhythm-600" />
         </div>
         <div>
-          <p className="text-sm font-medium text-rhythm-600">Organization</p>
+          <p className="text-sm font-medium text-rhythm-600">Organization/Team</p>
           <h1 className="text-2xl font-semibold text-gray-900">{name}</h1>
         </div>
       </div>
