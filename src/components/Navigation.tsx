@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { BarChart2, Calendar, Plus } from "lucide-react";
+import { BarChart2, Calendar, Plus, Home } from "lucide-react";
 
 const Navigation = () => {
   return (
@@ -9,8 +9,12 @@ const Navigation = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-8">
             <Link to="/" className="flex items-center space-x-2 text-rhythm-600 hover:text-rhythm-700">
+              <Home className="w-5 h-5" />
+              <span className="font-medium">Home</span>
+            </Link>
+            <Link to="/team-rhythms" className="flex items-center space-x-2 text-rhythm-600 hover:text-rhythm-700">
               <Calendar className="w-5 h-5" />
-              <span className="font-medium">Rhythm Overview</span>
+              <span className="font-medium">Team Rhythms</span>
             </Link>
             <Link to="/visualizer" className="flex items-center space-x-2 text-rhythm-600 hover:text-rhythm-700">
               <BarChart2 className="w-5 h-5" />

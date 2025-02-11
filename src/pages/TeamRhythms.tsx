@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import OrganizationHeader from "@/components/OrganizationHeader";
 import RhythmDisplay from "@/components/RhythmDisplay";
@@ -11,7 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const Index = () => {
+const TeamRhythms = () => {
   const [selectedOrgId, setSelectedOrgId] = useState<string>(organizations[0].id);
   const selectedOrg = organizations.find(org => org.id === selectedOrgId) || organizations[0];
 
@@ -49,4 +48,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default TeamRhythms;
