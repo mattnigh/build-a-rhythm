@@ -1,6 +1,6 @@
 
 import { Card } from "@/components/ui/card";
-import { Calendar, Users, Target, Clock, ExternalLink } from "lucide-react";
+import { Calendar, Users, Target, Clock, ExternalLink, Clock3 } from "lucide-react";
 import { useMemo } from "react";
 
 interface RhythmDisplayProps {
@@ -10,6 +10,7 @@ interface RhythmDisplayProps {
 interface RhythmItem {
   text: string;
   attendees: string;
+  duration: string;
   link?: string;
 }
 
@@ -32,12 +33,13 @@ const RhythmDisplay = ({ content }: RhythmDisplayProps) => {
         // Skip main title
         continue;
       } else if (line.startsWith('- ') && line.trim()) {
-        const match = line.match(/- (.*?)\[(.*?)\](.*)/);
+        const match = line.match(/- (.*?)\[(.*?)\]\s*\[(.*?)\](.*)/);
         if (match) {
           currentSection.content.push({
             text: match[1].trim(),
             attendees: match[2].trim(),
-            link: match[3]?.trim()
+            duration: match[3].trim(),
+            link: match[4]?.trim()
           });
         }
       }
@@ -71,17 +73,23 @@ const RhythmDisplay = ({ content }: RhythmDisplayProps) => {
                       href={item.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-rhythm-600 transition-opacity"
+                      className="text-rhythm-600 transition-opacity mt-1"
                       title="Open meeting link"
                     >
                       <ExternalLink className="w-4 h-4" />
                     </a>
                   )}
-                  <div className="flex-1 flex items-center justify-between">
-                    <p className="text-gray-800">{item.text}</p>
-                    <span className="text-sm text-rhythm-600 font-medium">
-                      {item.attendees}
-                    </span>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between">
+                      <p className="text-gray-800">{item.text}</p>
+                      <span className="text-sm text-rhythm-600 font-medium">
+                        {item.attendees}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1 text-sm text-gray-500 mt-1">
+                      <Clock3 className="w-3 h-3" />
+                      <span>{item.duration}</span>
+                    </div>
                   </div>
                 </div>
               ))}
