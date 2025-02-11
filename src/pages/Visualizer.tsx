@@ -38,7 +38,7 @@ const Visualizer = () => {
   const rhythmData = useMemo(() => getRhythmData(defaultRhythm), []);
   const totalSections = rhythmData.length;
   const radius = 300;
-  const center = radius + 50;
+  const center = radius + 100; // Increased center padding
   const size = (center + radius) * 2;
 
   return (
@@ -54,8 +54,12 @@ const Visualizer = () => {
             return section.items.map((item, itemIndex) => {
               const itemAngle = sectionAngle / (items + 1);
               const angle = startAngle + (itemIndex + 1) * itemAngle;
-              const x = center + radius * Math.cos(angle - Math.PI / 2);
-              const y = center + radius * Math.sin(angle - Math.PI / 2);
+              
+              // Adjust radius based on index to prevent overlapping
+              const itemRadius = radius - (itemIndex * 20);
+              
+              const x = center + itemRadius * Math.cos(angle - Math.PI / 2);
+              const y = center + itemRadius * Math.sin(angle - Math.PI / 2);
               
               const frequency = section.title.toLowerCase();
               const color = frequency.includes('daily') ? 'rgb(147, 197, 253)' :
@@ -67,17 +71,17 @@ const Visualizer = () => {
               return (
                 <g key={`${sectionIndex}-${itemIndex}`}>
                   <rect
-                    x={x - 60}
-                    y={y - 30}
-                    width="120"
-                    height="60"
+                    x={x - 70}
+                    y={y - 40}
+                    width="140"
+                    height="80"
                     rx="8"
                     fill={color}
                     fillOpacity="0.7"
                   />
                   <text
                     x={x}
-                    y={y}
+                    y={y - 15}
                     textAnchor="middle"
                     alignmentBaseline="middle"
                     className="text-xs font-medium"
@@ -87,13 +91,23 @@ const Visualizer = () => {
                   </text>
                   <text
                     x={x}
-                    y={y + 15}
+                    y={y + 5}
                     textAnchor="middle"
                     alignmentBaseline="middle"
                     className="text-xs"
                     fill="#6B7280"
                   >
                     {item.attendees}
+                  </text>
+                  <text
+                    x={x}
+                    y={y + 25}
+                    textAnchor="middle"
+                    alignmentBaseline="middle"
+                    className="text-xs"
+                    fill="#6B7280"
+                  >
+                    {item.duration} • {section.title}
                   </text>
                 </g>
               );
@@ -124,3 +138,4 @@ const Visualizer = () => {
 };
 
 export default Visualizer;
+
