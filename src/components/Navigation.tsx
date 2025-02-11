@@ -18,7 +18,7 @@ const Navigation = () => {
             </Link>
             <Link to="/visualizer" className="flex items-center space-x-2 text-rhythm-600 hover:text-rhythm-700">
               <BarChart2 className="w-5 h-5" />
-              <span className="font-medium">Rhythm Visualizer</span>
+              <span className="font-medium">Rhythm Analysis</span>
             </Link>
             <Link to="/builder" className="flex items-center space-x-2 text-rhythm-600 hover:text-rhythm-700">
               <Plus className="w-5 h-5" />
