@@ -21,4 +21,14 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'index.html'),
+        teamRhythms: path.resolve(__dirname, 'team-rhythms/index.html'),
+        visualizer: path.resolve(__dirname, 'visualizer/index.html'),
+        builder: path.resolve(__dirname, 'builder/index.html'),
+      },
+    },
+  },
 }));
