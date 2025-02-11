@@ -135,12 +135,20 @@ const RhythmBuilder = () => {
 
   const loadTemplate = async (templateSize: string) => {
     try {
-      const response = await fetch(`/build-a-rhythm/templates/${templateSize}.md`);
+      console.log('Loading template:', templateSize); // Debug log
+      const templatePath = `/build-a-rhythm/templates/team-${templateSize}.md`;
+      console.log('Template path:', templatePath); // Debug log
+      
+      const response = await fetch(templatePath);
+      console.log('Response status:', response.status); // Debug log
+      
       if (!response.ok) {
         throw new Error(`Failed to load template: ${response.statusText}`);
       }
       
       const templateContent = await response.text();
+      console.log('Template content length:', templateContent.length); // Debug log
+      
       const lines = templateContent.split('\n');
       const rhythmsToAdd: RhythmItem[] = [];
       let currentCategory = "";
@@ -217,4 +225,3 @@ const RhythmBuilder = () => {
 };
 
 export default RhythmBuilder;
-
