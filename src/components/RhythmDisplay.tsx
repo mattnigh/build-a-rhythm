@@ -1,6 +1,6 @@
 
 import { Card } from "@/components/ui/card";
-import { Calendar, Users, Target, Clock, ExternalLink, Clock3 } from "lucide-react";
+import { Calendar, Users, Target, Clock, ExternalLink, Clock3, Repeat } from "lucide-react";
 import { useMemo } from "react";
 
 interface RhythmDisplayProps {
@@ -11,6 +11,7 @@ interface RhythmItem {
   text: string;
   attendees: string;
   duration: string;
+  frequency: string;
   link?: string;
 }
 
@@ -45,13 +46,14 @@ const RhythmDisplay = ({ content }: RhythmDisplayProps) => {
         // Skip main title
         continue;
       } else if (line.startsWith('- ') && line.trim()) {
-        const match = line.match(/- (.*?)\[(.*?)\]\s*\[(.*?)\](.*)/);
+        const match = line.match(/- (.*?)\[(.*?)\]\s*\[(.*?)\]\s*\[(.*?)\](.*)/);
         if (match) {
           currentSection.content.push({
             text: match[1].trim(),
             attendees: match[2].trim(),
             duration: match[3].trim(),
-            link: match[4]?.trim()
+            frequency: match[4].trim(),
+            link: match[5]?.trim()
           });
         }
       }
@@ -95,9 +97,15 @@ const RhythmDisplay = ({ content }: RhythmDisplayProps) => {
                         {item.attendees}
                       </span>
                     </div>
-                    <div className="flex items-center gap-1 text-sm text-gray-500 mt-1">
-                      <Clock3 className="w-3 h-3" />
-                      <span>{item.duration}</span>
+                    <div className="flex items-center gap-3 text-sm text-gray-500 mt-1">
+                      <div className="flex items-center gap-1">
+                        <Clock3 className="w-3 h-3" />
+                        <span>{item.duration}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Repeat className="w-3 h-3" />
+                        <span>{item.frequency}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
