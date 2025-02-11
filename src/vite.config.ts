@@ -6,7 +6,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: "/rhythm-minder/", // Add this line for GitHub Pages
+  base: "./", // Changed from "/rhythm-minder/" to "./" for development
   server: {
     host: "::",
     port: 8080,
