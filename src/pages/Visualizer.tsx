@@ -103,19 +103,19 @@ const calculateTimeMetrics = (rhythmData: any[]) => {
     });
   });
 
-  // Convert to array format for charts
+  // Convert minutes to hours and round to 1 decimal place
   return {
     monthly: Object.entries(categoryTimes.monthly).map(([name, minutes]) => ({ 
       name, 
-      minutes: Math.round(minutes as number)
+      hours: Number((minutes as number / 60).toFixed(1))
     })),
     quarterly: Object.entries(categoryTimes.quarterly).map(([name, minutes]) => ({ 
       name, 
-      minutes: Math.round(minutes as number)
+      hours: Number((minutes as number / 60).toFixed(1))
     })),
     annual: Object.entries(categoryTimes.annual).map(([name, minutes]) => ({ 
       name, 
-      minutes: Math.round(minutes as number)
+      hours: Number((minutes as number / 60).toFixed(1))
     }))
   };
 };
@@ -136,10 +136,10 @@ const TimeChart = ({ data, title }: { data: any[], title: string }) => (
             height={70}
             interval={0}
           />
-          <YAxis label={{ value: 'Minutes', angle: -90, position: 'insideLeft' }} />
+          <YAxis label={{ value: 'Hours', angle: -90, position: 'insideLeft' }} />
           <Tooltip />
           <Legend />
-          <Bar dataKey="minutes" fill="#9b87f5" />
+          <Bar dataKey="hours" fill="#9b87f5" />
         </BarChart>
       </ResponsiveContainer>
     </CardContent>
@@ -181,9 +181,9 @@ const Visualizer = () => {
       </div>
 
       <div className="grid grid-cols-1 gap-8">
-        <TimeChart data={timeMetrics.monthly} title="Monthly Time per Category (minutes)" />
-        <TimeChart data={timeMetrics.quarterly} title="Quarterly Time per Category (minutes)" />
-        <TimeChart data={timeMetrics.annual} title="Annual Time per Category (minutes)" />
+        <TimeChart data={timeMetrics.monthly} title="Monthly Time per Category (hours)" />
+        <TimeChart data={timeMetrics.quarterly} title="Quarterly Time per Category (hours)" />
+        <TimeChart data={timeMetrics.annual} title="Annual Time per Category (hours)" />
       </div>
     </div>
   );
