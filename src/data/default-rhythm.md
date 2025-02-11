@@ -2,30 +2,30 @@
 # Acme Corp - Rhythm of Business
 
 ## Daily Stand-ups
-- Team Stand-ups [Daily] https://meeting-link/standup
-- Executive Team Sync [Daily] https://meeting-link/exec-sync
+- Team Stand-ups [Leadership Team] https://meeting-link/standup
+- Executive Team Sync [EPD LT] https://meeting-link/exec-sync
 
 ## Weekly Sessions
-- Strategy Sync [Weekly] https://meeting-link/strategy
-- Team Retrospectives [Weekly] https://meeting-link/retro
-- All-Hands Meeting [Weekly] https://meeting-link/all-hands
+- Strategy Sync [Actions Team] https://meeting-link/strategy
+- Team Retrospectives [Leadership Team] https://meeting-link/retro
+- All-Hands Meeting [EPD LT] https://meeting-link/all-hands
 
 ## Bi-Weekly Reviews
-- Sprint Planning [Bi-weekly] https://meeting-link/sprint
-- Product Reviews [Bi-weekly] https://meeting-link/product
-- Security Reviews [Bi-weekly] https://meeting-link/security
+- Sprint Planning [Actions Team] https://meeting-link/sprint
+- Product Reviews [Leadership Team] https://meeting-link/product
+- Security Reviews [EPD LT] https://meeting-link/security
 
 ## Monthly Check-ins
-- OKR Reviews [Monthly] https://meeting-link/okr
-- Financial Reports [Monthly] https://meeting-link/finance
-- Department Updates [Monthly] https://meeting-link/dept
+- OKR Reviews [Leadership Team] https://meeting-link/okr
+- Financial Reports [EPD LT] https://meeting-link/finance
+- Department Updates [Actions Team] https://meeting-link/dept
 
 ## Quarterly Planning
-- Business Reviews [Quarterly] https://meeting-link/qbr
-- Strategy Planning [Quarterly] https://meeting-link/strategy-q
-- Budget Reviews [Quarterly] https://meeting-link/budget
+- Business Reviews [Leadership Team] https://meeting-link/qbr
+- Strategy Planning [EPD LT] https://meeting-link/strategy-q
+- Budget Reviews [Actions Team] https://meeting-link/budget
 
 ## Annual Events
-- Performance Reviews [Yearly] https://meeting-link/reviews
-- Strategic Planning [Yearly] https://meeting-link/strategy-annual
-- Budget Planning [Yearly] https://meeting-link/budget-annual
+- Performance Reviews [Leadership Team] https://meeting-link/reviews
+- Strategic Planning [EPD LT] https://meeting-link/strategy-annual
+- Budget Planning [Actions Team] https://meeting-link/budget-annual
