@@ -1,4 +1,3 @@
-
 import { useMemo, useState } from "react";
 import { organizations } from "@/data/organizations";
 import {
@@ -32,7 +31,6 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 
@@ -171,7 +169,6 @@ const TimeChart = ({ data, title, total }: { data: any[], title: string, total: 
 
 const Visualizer = () => {
   const [selectedOrgId, setSelectedOrgId] = useState<string>(organizations[0].id);
-  const [filterValue, setFilterValue] = useState("");
   const [sortColumn, setSortColumn] = useState<keyof RhythmDetail>("name");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
   
@@ -189,21 +186,8 @@ const Visualizer = () => {
     return rhythmData.flatMap(section => section.items);
   }, [rhythmData]);
 
-  const filteredAndSortedRhythms = useMemo(() => {
-    let filtered = allRhythms;
-    
-    if (filterValue) {
-      const lowerFilter = filterValue.toLowerCase();
-      filtered = filtered.filter(rhythm => 
-        rhythm.name.toLowerCase().includes(lowerFilter) ||
-        rhythm.category.toLowerCase().includes(lowerFilter) ||
-        rhythm.attendees.toLowerCase().includes(lowerFilter) ||
-        rhythm.frequency.toLowerCase().includes(lowerFilter) ||
-        rhythm.duration.toString().includes(lowerFilter)
-      );
-    }
-
-    return filtered.sort((a, b) => {
+  const sortedRhythms = useMemo(() => {
+    return [...allRhythms].sort((a, b) => {
       const aValue = a[sortColumn];
       const bValue = b[sortColumn];
       
@@ -217,7 +201,7 @@ const Visualizer = () => {
         ? aString.localeCompare(bString)
         : bString.localeCompare(aString);
     });
-  }, [allRhythms, filterValue, sortColumn, sortDirection]);
+  }, [allRhythms, sortColumn, sortDirection]);
 
   const handleSort = (column: keyof RhythmDetail) => {
     if (sortColumn === column) {
@@ -231,7 +215,7 @@ const Visualizer = () => {
   return (
     <div className="container max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-        <h1 className="text-2xl font-semibold text-gray-900">Category Time Analysis</h1>
+        <h1 className="text-2xl font-semibold text-gray-900">Data and Analysis</h1>
         <Select
           value={selectedOrgId}
           onValueChange={(value) => setSelectedOrgId(value)}
@@ -250,14 +234,6 @@ const Visualizer = () => {
       </div>
 
       <div className="mb-8">
-        <div className="mb-4">
-          <Input
-            placeholder="Filter rhythms..."
-            value={filterValue}
-            onChange={(e) => setFilterValue(e.target.value)}
-            className="max-w-sm"
-          />
-        </div>
         <div className="rounded-md border">
           <Table>
             <TableHeader>
@@ -315,7 +291,7 @@ const Visualizer = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredAndSortedRhythms.map((rhythm, index) => (
+              {sortedRhythms.map((rhythm, index) => (
                 <TableRow key={index}>
                   <TableCell>{rhythm.name}</TableCell>
                   <TableCell>{rhythm.category}</TableCell>
@@ -351,4 +327,3 @@ const Visualizer = () => {
 };
 
 export default Visualizer;
-
