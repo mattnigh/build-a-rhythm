@@ -1,5 +1,6 @@
 
 import { Link } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 import {
   Card,
   CardContent,
@@ -7,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import homeContent from "../data/home-content.md?raw";
 
 const Home = () => {
   return (
@@ -17,16 +19,44 @@ const Home = () => {
           <div className="text-gray-400">Banner Image Placeholder</div>
         </div>
 
-        {/* Welcome Section */}
-        <div className="text-center space-y-4">
-          <h1 className="text-4xl font-bold text-gray-900">Welcome to Rhythm Minder</h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Your comprehensive tool for managing and visualizing team meeting rhythms. Get started by exploring our features below.
-          </p>
+        {/* Content from Markdown */}
+        <div className="prose prose-slate max-w-none">
+          <ReactMarkdown
+            components={{
+              h1: ({ children }) => (
+                <h1 className="text-4xl font-bold text-gray-900 text-center">{children}</h1>
+              ),
+              p: ({ children }) => (
+                <p className="text-xl text-gray-600 max-w-3xl mx-auto text-center">{children}</p>
+              ),
+              h2: ({ children }) => (
+                <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-8">{children}</h2>
+              ),
+              h3: ({ children }) => (
+                <CardTitle>{children}</CardTitle>
+              ),
+              a: ({ href, children }) => (
+                <Link 
+                  to={href || "#"} 
+                  className="text-rhythm-600 hover:text-rhythm-700 font-medium"
+                >
+                  {children}
+                </Link>
+              ),
+              ol: ({ children }) => (
+                <ol className="list-decimal list-inside space-y-3 text-gray-600">
+                  {children}
+                </ol>
+              ),
+            }}
+          >
+            {homeContent}
+          </ReactMarkdown>
         </div>
 
         {/* Features Grid */}
         <div className="grid md:grid-cols-3 gap-8">
+          {/* Team Rhythms Card */}
           <Card>
             <CardHeader>
               <CardTitle>Team Rhythms</CardTitle>
@@ -45,6 +75,7 @@ const Home = () => {
             </CardContent>
           </Card>
 
+          {/* Rhythm Visualizer Card */}
           <Card>
             <CardHeader>
               <CardTitle>Rhythm Visualizer</CardTitle>
@@ -63,6 +94,7 @@ const Home = () => {
             </CardContent>
           </Card>
 
+          {/* Rhythm Builder Card */}
           <Card>
             <CardHeader>
               <CardTitle>Rhythm Builder</CardTitle>
@@ -82,7 +114,7 @@ const Home = () => {
           </Card>
         </div>
 
-        {/* Getting Started Guide */}
+        {/* How to Use Guide */}
         <Card className="mt-12">
           <CardHeader>
             <CardTitle>How to Use Rhythm Builder</CardTitle>
