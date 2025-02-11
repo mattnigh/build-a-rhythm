@@ -15,6 +15,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
   BarChart,
   Bar,
   XAxis,
@@ -24,6 +32,17 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { ArrowUpDown } from "lucide-react";
+
+interface RhythmDetail {
+  name: string;
+  category: string;
+  attendees: string;
+  duration: number;
+  frequency: string;
+}
 
 const getRhythmData = (content: string) => {
   const lines = content.split('\n');
@@ -44,6 +63,7 @@ const getRhythmData = (content: string) => {
       if (match) {
         currentSection.items.push({
           name: match[1].trim(),
+          category: currentSection.title,
           attendees: match[2].trim(),
           duration: parseInt(match[3]),
           frequency: match[4].trim(),
@@ -61,7 +81,7 @@ const getRhythmData = (content: string) => {
 const getFrequencyMultiplier = (frequency: string) => {
   switch (frequency.toLowerCase()) {
     case 'daily':
-      return { monthly: 20, quarterly: 60, annual: 240 }; // Assuming 20 working days per month
+      return { monthly: 20, quarterly: 60, annual: 240 };
     case 'weekly':
       return { monthly: 4, quarterly: 12, annual: 48 };
     case 'bi-weekly':
@@ -73,7 +93,7 @@ const getFrequencyMultiplier = (frequency: string) => {
     case 'annual':
       return { monthly: 1/12, quarterly: 1/4, annual: 1 };
     case 'ad hoc':
-      return { monthly: 1/2, quarterly: 1.5, annual: 6 }; // Assuming ad hoc meetings happen roughly 6 times a year
+      return { monthly: 1/2, quarterly: 1.5, annual: 6 };
     default:
       return { monthly: 0, quarterly: 0, annual: 0 };
   }
@@ -93,7 +113,6 @@ const calculateTimeMetrics = (rhythmData: any[]) => {
       const multipliers = getFrequencyMultiplier(item.frequency);
       const duration = item.duration;
 
-      // Initialize category if it doesn't exist
       ['monthly', 'quarterly', 'annual'].forEach(period => {
         if (!categoryTimes[period][category]) {
           categoryTimes[period][category] = 0;
@@ -103,7 +122,6 @@ const calculateTimeMetrics = (rhythmData: any[]) => {
     });
   });
 
-  // Convert minutes to hours and calculate totals
   const calculatePeriodData = (periodTimes: Record<string, number>) => {
     const data = Object.entries(periodTimes).map(([name, minutes]) => ({ 
       name, 
@@ -153,6 +171,9 @@ const TimeChart = ({ data, title, total }: { data: any[], title: string, total: 
 
 const Visualizer = () => {
   const [selectedOrgId, setSelectedOrgId] = useState<string>(organizations[0].id);
+  const [filterValue, setFilterValue] = useState("");
+  const [sortColumn, setSortColumn] = useState<keyof RhythmDetail>("name");
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
   
   const selectedOrg = organizations.find(org => org.id === selectedOrgId);
   const rhythmData = selectedOrg ? getRhythmData(selectedOrg.content) : [];
@@ -162,6 +183,49 @@ const Visualizer = () => {
     const lines = content.split('\n');
     const headerLine = lines.find(line => line.startsWith('# '));
     return headerLine ? headerLine.replace('# ', '') : "Rhythm Visualizer";
+  };
+
+  const allRhythms = useMemo(() => {
+    return rhythmData.flatMap(section => section.items);
+  }, [rhythmData]);
+
+  const filteredAndSortedRhythms = useMemo(() => {
+    let filtered = allRhythms;
+    
+    if (filterValue) {
+      const lowerFilter = filterValue.toLowerCase();
+      filtered = filtered.filter(rhythm => 
+        rhythm.name.toLowerCase().includes(lowerFilter) ||
+        rhythm.category.toLowerCase().includes(lowerFilter) ||
+        rhythm.attendees.toLowerCase().includes(lowerFilter) ||
+        rhythm.frequency.toLowerCase().includes(lowerFilter) ||
+        rhythm.duration.toString().includes(lowerFilter)
+      );
+    }
+
+    return filtered.sort((a, b) => {
+      const aValue = a[sortColumn];
+      const bValue = b[sortColumn];
+      
+      if (typeof aValue === 'number' && typeof bValue === 'number') {
+        return sortDirection === 'asc' ? aValue - bValue : bValue - aValue;
+      }
+      
+      const aString = String(aValue).toLowerCase();
+      const bString = String(bValue).toLowerCase();
+      return sortDirection === 'asc' 
+        ? aString.localeCompare(bString)
+        : bString.localeCompare(aString);
+    });
+  }, [allRhythms, filterValue, sortColumn, sortDirection]);
+
+  const handleSort = (column: keyof RhythmDetail) => {
+    if (sortColumn === column) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortColumn(column);
+      setSortDirection('asc');
+    }
   };
 
   return (
@@ -183,6 +247,86 @@ const Visualizer = () => {
             ))}
           </SelectContent>
         </Select>
+      </div>
+
+      <div className="mb-8">
+        <div className="mb-4">
+          <Input
+            placeholder="Filter rhythms..."
+            value={filterValue}
+            onChange={(e) => setFilterValue(e.target.value)}
+            className="max-w-sm"
+          />
+        </div>
+        <div className="rounded-md border">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>
+                  <Button
+                    variant="ghost"
+                    onClick={() => handleSort('name')}
+                    className="h-8 flex items-center gap-1"
+                  >
+                    Name
+                    <ArrowUpDown className="h-4 w-4" />
+                  </Button>
+                </TableHead>
+                <TableHead>
+                  <Button
+                    variant="ghost"
+                    onClick={() => handleSort('category')}
+                    className="h-8 flex items-center gap-1"
+                  >
+                    Category
+                    <ArrowUpDown className="h-4 w-4" />
+                  </Button>
+                </TableHead>
+                <TableHead>
+                  <Button
+                    variant="ghost"
+                    onClick={() => handleSort('attendees')}
+                    className="h-8 flex items-center gap-1"
+                  >
+                    Attendees
+                    <ArrowUpDown className="h-4 w-4" />
+                  </Button>
+                </TableHead>
+                <TableHead>
+                  <Button
+                    variant="ghost"
+                    onClick={() => handleSort('duration')}
+                    className="h-8 flex items-center gap-1"
+                  >
+                    Duration (min)
+                    <ArrowUpDown className="h-4 w-4" />
+                  </Button>
+                </TableHead>
+                <TableHead>
+                  <Button
+                    variant="ghost"
+                    onClick={() => handleSort('frequency')}
+                    className="h-8 flex items-center gap-1"
+                  >
+                    Frequency
+                    <ArrowUpDown className="h-4 w-4" />
+                  </Button>
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {filteredAndSortedRhythms.map((rhythm, index) => (
+                <TableRow key={index}>
+                  <TableCell>{rhythm.name}</TableCell>
+                  <TableCell>{rhythm.category}</TableCell>
+                  <TableCell>{rhythm.attendees}</TableCell>
+                  <TableCell>{rhythm.duration}</TableCell>
+                  <TableCell>{rhythm.frequency}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 gap-8">
