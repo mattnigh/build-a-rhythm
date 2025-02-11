@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { toast } from "@/hooks/use-toast";
-import { RhythmItem } from "@/types/rhythm";
+import { RhythmItem, OrgDetail } from "@/types/rhythm";
 import { generateMarkdown } from "@/utils/rhythmUtils";
 import TemplateSelector from "@/components/rhythm/TemplateSelector";
 import OrganizationDetails from "@/components/rhythm/OrganizationDetails";
@@ -10,6 +10,7 @@ import RhythmList from "@/components/rhythm/RhythmList";
 
 const RhythmBuilder = () => {
   const [organizationName, setOrganizationName] = useState("");
+  const [orgDetails, setOrgDetails] = useState<OrgDetail[]>([]);
   const [rhythms, setRhythms] = useState<RhythmItem[]>([]);
   const [currentRhythm, setCurrentRhythm] = useState<RhythmItem>({
     name: "",
@@ -78,7 +79,7 @@ const RhythmBuilder = () => {
       return;
     }
 
-    const markdown = generateMarkdown(organizationName, rhythms);
+    const markdown = generateMarkdown(organizationName, rhythms, orgDetails);
     const blob = new Blob([markdown], { type: 'text/markdown' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -149,6 +150,8 @@ const RhythmBuilder = () => {
         <OrganizationDetails
           organizationName={organizationName}
           setOrganizationName={setOrganizationName}
+          orgDetails={orgDetails}
+          setOrgDetails={setOrgDetails}
         />
 
         <RhythmForm
