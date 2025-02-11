@@ -49,6 +49,7 @@ const RhythmBuilder = () => {
     frequency: "",
     link: ""
   });
+  const [showCustomCategory, setShowCustomCategory] = useState(false);
 
   const addRhythm = () => {
     if (!currentRhythm.name || !currentRhythm.category || !currentRhythm.attendees || !currentRhythm.duration || !currentRhythm.frequency) {
@@ -69,6 +70,7 @@ const RhythmBuilder = () => {
       frequency: "",
       link: ""
     });
+    setShowCustomCategory(false);
     
     toast({
       title: "Rhythm Added",
@@ -180,21 +182,51 @@ const RhythmBuilder = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Category
                 </label>
-                <Select
-                  value={currentRhythm.category}
-                  onValueChange={(value) => setCurrentRhythm({ ...currentRhythm, category: value })}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {CATEGORIES.map((category) => (
-                      <SelectItem key={category} value={category}>
-                        {category}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                {!showCustomCategory ? (
+                  <div className="space-y-2">
+                    <Select
+                      value={currentRhythm.category}
+                      onValueChange={(value) => {
+                        if (value === "custom") {
+                          setShowCustomCategory(true);
+                          setCurrentRhythm({ ...currentRhythm, category: "" });
+                        } else {
+                          setCurrentRhythm({ ...currentRhythm, category: value });
+                        }
+                      }}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select category" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {CATEGORIES.map((category) => (
+                          <SelectItem key={category} value={category}>
+                            {category}
+                          </SelectItem>
+                        ))}
+                        <SelectItem value="custom">Add Custom Category</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    <Input
+                      placeholder="Enter custom category"
+                      value={currentRhythm.category}
+                      onChange={(e) => setCurrentRhythm({ ...currentRhythm, category: e.target.value })}
+                    />
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => {
+                        setShowCustomCategory(false);
+                        setCurrentRhythm({ ...currentRhythm, category: "" });
+                      }}
+                    >
+                      Use Predefined Category
+                    </Button>
+                  </div>
+                )}
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -293,4 +325,3 @@ const RhythmBuilder = () => {
 };
 
 export default RhythmBuilder;
-
