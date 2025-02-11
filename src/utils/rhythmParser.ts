@@ -1,4 +1,3 @@
-
 /**
  * Functions to parse rhythm data from markdown content
  */
@@ -65,4 +64,29 @@ export const getHeaderInfo = (content: string) => {
   const lines = content.split('\n');
   const headerLine = lines.find(line => line.startsWith('# '));
   return headerLine ? headerLine.replace('# ', '') : "Rhythm Analysis";
+};
+
+/**
+ * Parses organization details from markdown content.
+ * Extracts information between '### Organization Details' and the next section.
+ * 
+ * @param content - The markdown string to parse
+ * @returns An array of organization details with type and URL
+ */
+export const parseOrgDetails = (content: string): { type: string; url: string }[] => {
+  const lines = content.split('\n');
+  const detailsSection = lines
+    .slice(
+      lines.findIndex(line => line.startsWith('### Organization Details')) + 1,
+      lines.findIndex((line, index) => 
+        index > lines.findIndex(l => l.startsWith('### Organization Details')) && 
+        line.startsWith('## ')
+      )
+    )
+    .filter(line => line.trim());
+
+  return detailsSection.map(line => {
+    const [type, url] = line.replace('- ', '').split(': ');
+    return { type, url: url || '' };
+  });
 };
