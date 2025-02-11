@@ -103,27 +103,32 @@ const calculateTimeMetrics = (rhythmData: any[]) => {
     });
   });
 
-  // Convert minutes to hours and round to 1 decimal place
+  // Convert minutes to hours and calculate totals
+  const calculatePeriodData = (periodTimes: Record<string, number>) => {
+    const data = Object.entries(periodTimes).map(([name, minutes]) => ({ 
+      name, 
+      hours: Number((minutes / 60).toFixed(1))
+    }));
+    const total = Number((Object.values(periodTimes).reduce((a, b) => a + b, 0) / 60).toFixed(1));
+    return { data, total };
+  };
+
   return {
-    monthly: Object.entries(categoryTimes.monthly).map(([name, minutes]) => ({ 
-      name, 
-      hours: Number((minutes as number / 60).toFixed(1))
-    })),
-    quarterly: Object.entries(categoryTimes.quarterly).map(([name, minutes]) => ({ 
-      name, 
-      hours: Number((minutes as number / 60).toFixed(1))
-    })),
-    annual: Object.entries(categoryTimes.annual).map(([name, minutes]) => ({ 
-      name, 
-      hours: Number((minutes as number / 60).toFixed(1))
-    }))
+    monthly: calculatePeriodData(categoryTimes.monthly),
+    quarterly: calculatePeriodData(categoryTimes.quarterly),
+    annual: calculatePeriodData(categoryTimes.annual)
   };
 };
 
-const TimeChart = ({ data, title }: { data: any[], title: string }) => (
+const TimeChart = ({ data, title, total }: { data: any[], title: string, total: number }) => (
   <Card className="w-full">
     <CardHeader>
-      <CardTitle>{title}</CardTitle>
+      <div className="flex justify-between items-center">
+        <CardTitle>{title}</CardTitle>
+        <div className="text-sm font-medium text-muted-foreground">
+          Total: {total} hours
+        </div>
+      </div>
     </CardHeader>
     <CardContent className="h-[300px]">
       <ResponsiveContainer width="100%" height="100%">
@@ -181,12 +186,25 @@ const Visualizer = () => {
       </div>
 
       <div className="grid grid-cols-1 gap-8">
-        <TimeChart data={timeMetrics.monthly} title="Monthly Time per Category (hours)" />
-        <TimeChart data={timeMetrics.quarterly} title="Quarterly Time per Category (hours)" />
-        <TimeChart data={timeMetrics.annual} title="Annual Time per Category (hours)" />
+        <TimeChart 
+          data={timeMetrics.monthly.data} 
+          title="Monthly Time per Category (hours)" 
+          total={timeMetrics.monthly.total}
+        />
+        <TimeChart 
+          data={timeMetrics.quarterly.data} 
+          title="Quarterly Time per Category (hours)" 
+          total={timeMetrics.quarterly.total}
+        />
+        <TimeChart 
+          data={timeMetrics.annual.data} 
+          title="Annual Time per Category (hours)" 
+          total={timeMetrics.annual.total}
+        />
       </div>
     </div>
   );
 };
 
 export default Visualizer;
+
