@@ -1,10 +1,10 @@
+
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card } from "@/components/ui/card";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "@/hooks/use-toast";
 import { Plus, Download, Trash2 } from "lucide-react";
 import { organizations } from "@/data/organizations";
 
@@ -17,7 +17,6 @@ interface RhythmItem {
   link: string;
 }
 
-// Dynamically extract unique categories from organizations data
 const CATEGORIES = Array.from(
   new Set(
     organizations.flatMap(org => {
@@ -123,7 +122,6 @@ const RhythmBuilder = () => {
       markdown += '\n';
     });
 
-    // Create and trigger download
     const blob = new Blob([markdown], { type: 'text/markdown' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -148,8 +146,9 @@ const RhythmBuilder = () => {
           <p className="text-gray-600">Create and export your organization's rhythm of business</p>
         </div>
 
-        <Card className="p-6 space-y-6">
+        <Card className="p-6">
           <div className="space-y-4">
+            <h2 className="text-xl font-semibold text-gray-900">Organization Details</h2>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Organization Name
@@ -160,7 +159,12 @@ const RhythmBuilder = () => {
                 onChange={(e) => setOrganizationName(e.target.value)}
               />
             </div>
+          </div>
+        </Card>
 
+        <Card className="p-6 space-y-6">
+          <div className="space-y-4">
+            <h2 className="text-xl font-semibold text-gray-900">Add New Rhythm</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -289,3 +293,4 @@ const RhythmBuilder = () => {
 };
 
 export default RhythmBuilder;
+
