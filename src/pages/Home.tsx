@@ -90,13 +90,14 @@ const Home = () => {
           </CardHeader>
           <CardContent className="space-y-4">
             <ol className="list-decimal list-inside space-y-3 text-gray-600">
-              <li>Select a template based on your team size or start from scratch</li>
+              <li>Upload an existing rhythm file or start from scratch</li>
+              <li>Choose from our templates based on your team size if starting fresh</li>
+              <li>Enter your organization's name and details</li>
               <li>Customize meeting details including title, attendees, and duration</li>
               <li>Organize meetings into categories (e.g., Strategic, Tactical, One-on-ones)</li>
               <li>Set meeting frequencies (daily, weekly, monthly, etc.)</li>
               <li>Add any relevant meeting links or additional notes</li>
-              <li>Review your rhythm in the Team Rhythms view</li>
-              <li>Analyze time allocation in the Rhythm Visualizer</li>
+              <li>Review and export your rhythm as a markdown file</li>
             </ol>
           </CardContent>
         </Card>
