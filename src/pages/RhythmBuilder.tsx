@@ -181,10 +181,8 @@ const RhythmBuilder = () => {
           <p className="text-gray-600">Create and export your organization's rhythm of business</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <TemplateSelector loadTemplate={loadTemplate} />
-          <FileUpload onFileUpload={handleFileUpload} />
-        </div>
+        <FileUpload onFileUpload={handleFileUpload} />
+        <TemplateSelector loadTemplate={loadTemplate} />
 
         <OrganizationDetails
           organizationName={organizationName}
