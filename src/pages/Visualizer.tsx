@@ -60,8 +60,7 @@ const Visualizer = () => {
 
   const orgsToDisplay = getOrganizationsToDisplay();
   const totalOrgs = orgsToDisplay.length;
-  const baseRadius = 300;
-  const spacing = 50;
+  const baseRadius = selectedOrgId === "all" ? 200 : 300; // Smaller radius when showing all
   const center = baseRadius + 100;
   const size = (center + baseRadius) * 2;
 
@@ -87,25 +86,35 @@ const Visualizer = () => {
         </Select>
       </div>
       <div className="w-full overflow-x-auto">
-        {orgsToDisplay.map((org, orgIndex) => {
-          const rhythmData = getRhythmData(org.content);
-          const totalSections = rhythmData.length;
-          const yOffset = orgIndex * (baseRadius * 2 + spacing);
+        <svg width={size} height={size} className="mx-auto">
+          {orgsToDisplay.map((org, orgIndex) => {
+            const rhythmData = getRhythmData(org.content);
+            const totalSections = rhythmData.length;
+            const angleOffset = selectedOrgId === "all" ? (2 * Math.PI * orgIndex) / totalOrgs : 0;
 
-          return (
-            <div key={org.id} className="relative">
-              <h2 className="text-xl font-semibold mb-4 text-center">{getHeaderInfo(org.content)}</h2>
-              <svg width={size} height={size} className="mx-auto">
+            return (
+              <g key={org.id}>
+                {selectedOrgId === "all" && (
+                  <text
+                    x={center}
+                    y={40 + (orgIndex * 20)}
+                    textAnchor="middle"
+                    className="text-sm font-medium"
+                    fill="#374151"
+                  >
+                    {getHeaderInfo(org.content)}
+                  </text>
+                )}
                 {rhythmData.map((section, sectionIndex) => {
                   const sectionAngle = (2 * Math.PI) / totalSections;
-                  const startAngle = sectionIndex * sectionAngle;
+                  const startAngle = sectionIndex * sectionAngle + angleOffset;
                   const items = section.items.length;
                   
                   return section.items.map((item, itemIndex) => {
                     const itemAngle = sectionAngle / (items + 1);
                     const angle = startAngle + (itemIndex + 1) * itemAngle;
                     
-                    const itemRadius = baseRadius - (itemIndex * 20);
+                    const itemRadius = baseRadius - (itemIndex * 15); // Reduced spacing between items
                     
                     const x = center + itemRadius * Math.cos(angle - Math.PI / 2);
                     const y = center + itemRadius * Math.sin(angle - Math.PI / 2);
@@ -120,43 +129,43 @@ const Visualizer = () => {
                     return (
                       <g key={`${sectionIndex}-${itemIndex}`}>
                         <rect
-                          x={x - 70}
-                          y={y - 40}
-                          width="140"
-                          height="80"
+                          x={x - 50}
+                          y={y - 30}
+                          width="100"
+                          height="60"
                           rx="8"
                           fill={color}
                           fillOpacity="0.7"
                         />
                         <text
                           x={x}
-                          y={y - 15}
+                          y={y - 12}
                           textAnchor="middle"
                           alignmentBaseline="middle"
-                          className="text-xs font-medium"
+                          className="text-[10px] font-medium"
                           fill="#374151"
                         >
                           {item.name}
                         </text>
                         <text
                           x={x}
-                          y={y + 5}
+                          y={y + 3}
                           textAnchor="middle"
                           alignmentBaseline="middle"
-                          className="text-xs"
+                          className="text-[8px]"
                           fill="#6B7280"
                         >
                           {item.attendees}
                         </text>
                         <text
                           x={x}
-                          y={y + 25}
+                          y={y + 18}
                           textAnchor="middle"
                           alignmentBaseline="middle"
-                          className="text-xs"
+                          className="text-[8px]"
                           fill="#6B7280"
                         >
-                          {item.duration} • {section.title}
+                          {item.duration}
                         </text>
                       </g>
                     );
@@ -165,28 +174,31 @@ const Visualizer = () => {
                 <circle
                   cx={center}
                   cy={center}
-                  r="80"
+                  r="60"
                   fill="white"
                   stroke="#E5E7EB"
                   strokeWidth="2"
                 />
-                <text
-                  x={center}
-                  y={center}
-                  textAnchor="middle"
-                  alignmentBaseline="middle"
-                  className="text-lg font-semibold"
-                  fill="#374151"
-                >
-                  Rhythm
-                </text>
-              </svg>
-            </div>
-          );
-        })}
+                {selectedOrgId !== "all" && (
+                  <text
+                    x={center}
+                    y={center}
+                    textAnchor="middle"
+                    alignmentBaseline="middle"
+                    className="text-lg font-semibold"
+                    fill="#374151"
+                  >
+                    Rhythm
+                  </text>
+                )}
+              </g>
+            );
+          })}
+        </svg>
       </div>
     </div>
   );
 };
 
 export default Visualizer;
+
