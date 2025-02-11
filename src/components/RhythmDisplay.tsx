@@ -14,6 +14,18 @@ interface RhythmItem {
   link?: string;
 }
 
+const categoryIcons: { [key: string]: React.ReactNode } = {
+  "Planning": <Target className="w-5 h-5 text-rhythm-600" />,
+  "Business Reviews": <Clock className="w-5 h-5 text-rhythm-600" />,
+  "Team Meetings": <Users className="w-5 h-5 text-rhythm-600" />,
+  "Product Sessions": <Target className="w-5 h-5 text-rhythm-600" />,
+  "Strategy & Leadership": <Calendar className="w-5 h-5 text-rhythm-600" />,
+  "Technical Sessions": <Target className="w-5 h-5 text-rhythm-600" />,
+  "Design & Innovation": <Target className="w-5 h-5 text-rhythm-600" />,
+  "Growth & Marketing": <Target className="w-5 h-5 text-rhythm-600" />,
+  "Customer Success": <Users className="w-5 h-5 text-rhythm-600" />,
+};
+
 const RhythmDisplay = ({ content }: RhythmDisplayProps) => {
   const sections = useMemo(() => {
     const lines = content.split('\n');
@@ -59,10 +71,7 @@ const RhythmDisplay = ({ content }: RhythmDisplayProps) => {
         >
           <div className="p-6">
             <div className="flex items-center gap-3 mb-4">
-              {index % 4 === 0 && <Calendar className="w-5 h-5 text-rhythm-600" />}
-              {index % 4 === 1 && <Users className="w-5 h-5 text-rhythm-600" />}
-              {index % 4 === 2 && <Target className="w-5 h-5 text-rhythm-600" />}
-              {index % 4 === 3 && <Clock className="w-5 h-5 text-rhythm-600" />}
+              {categoryIcons[section.title] || <Calendar className="w-5 h-5 text-rhythm-600" />}
               <h2 className="text-xl font-semibold text-gray-900">{section.title}</h2>
             </div>
             <div className="space-y-3">
