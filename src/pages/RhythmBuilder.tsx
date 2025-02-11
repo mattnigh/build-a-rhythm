@@ -3,6 +3,7 @@ import { useState } from "react";
 import { toast } from "@/hooks/use-toast";
 import { RhythmItem } from "@/types/rhythm";
 import { generateMarkdown } from "@/utils/rhythmUtils";
+import TemplateSelector from "@/components/rhythm/TemplateSelector";
 import OrganizationDetails from "@/components/rhythm/OrganizationDetails";
 import RhythmForm from "@/components/rhythm/RhythmForm";
 import RhythmList from "@/components/rhythm/RhythmList";
@@ -143,10 +144,11 @@ const RhythmBuilder = () => {
           <p className="text-gray-600">Create and export your organization's rhythm of business</p>
         </div>
 
+        <TemplateSelector loadTemplate={loadTemplate} />
+
         <OrganizationDetails
           organizationName={organizationName}
           setOrganizationName={setOrganizationName}
-          loadTemplate={loadTemplate}
         />
 
         <RhythmForm
