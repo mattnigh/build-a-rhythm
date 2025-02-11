@@ -1,6 +1,6 @@
 
 import { Card } from "@/components/ui/card";
-import { Calendar, Users, Target, Clock } from "lucide-react";
+import { Calendar, Users, Target, Clock, ExternalLink } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { useMemo } from "react";
 
@@ -8,11 +8,17 @@ interface RhythmDisplayProps {
   content: string;
 }
 
+interface RhythmItem {
+  text: string;
+  frequency: string;
+  link?: string;
+}
+
 const RhythmDisplay = ({ content }: RhythmDisplayProps) => {
   const sections = useMemo(() => {
     const lines = content.split('\n');
     const sections = [];
-    let currentSection = { title: '', content: [] };
+    let currentSection = { title: '', content: [] as RhythmItem[] };
     
     for (const line of lines) {
       if (line.startsWith('## ')) {
@@ -26,8 +32,15 @@ const RhythmDisplay = ({ content }: RhythmDisplayProps) => {
       } else if (line.startsWith('# ')) {
         // Skip main title
         continue;
-      } else if (line.trim()) {
-        currentSection.content.push(line);
+      } else if (line.startsWith('- ') && line.trim()) {
+        const match = line.match(/- (.*?)\[(.*?)\](.*)/);
+        if (match) {
+          currentSection.content.push({
+            text: match[1].trim(),
+            frequency: match[2].trim(),
+            link: match[3]?.trim()
+          });
+        }
       }
     }
     if (currentSection.title) {
@@ -51,10 +64,28 @@ const RhythmDisplay = ({ content }: RhythmDisplayProps) => {
               {index % 4 === 3 && <Clock className="w-5 h-5 text-rhythm-600" />}
               <h2 className="text-xl font-semibold text-gray-900">{section.title}</h2>
             </div>
-            <div className="prose prose-rhythm prose-sm">
-              <ReactMarkdown>
-                {section.content.join('\n')}
-              </ReactMarkdown>
+            <div className="space-y-3">
+              {section.content.map((item, itemIndex) => (
+                <div key={itemIndex} className="flex items-start gap-2 group">
+                  <div className="flex-1">
+                    <p className="text-gray-800">{item.text}</p>
+                    <span className="text-sm text-rhythm-600 font-medium">
+                      {item.frequency}
+                    </span>
+                  </div>
+                  {item.link && (
+                    <a
+                      href={item.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-rhythm-600 opacity-0 group-hover:opacity-100 transition-opacity"
+                      title="Open meeting link"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         </Card>

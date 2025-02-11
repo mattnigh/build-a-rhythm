@@ -1,47 +1,31 @@
 
 # Acme Corp - Rhythm of Business
 
-## Quarterly Business Reviews
-- Executive QBR: Last Thursday of each quarter
-- Regional QBRs: Second week of each quarter
-- Product QBRs: Third week of each quarter
+## Daily Stand-ups
+- Team Stand-ups [Daily] https://meeting-link/standup
+- Executive Team Sync [Daily] https://meeting-link/exec-sync
 
-## OKR Cycles
-### Planning & Setting
-- Annual OKR Planning: December 1-15
-- Quarterly OKR Setting: Last 2 weeks before quarter start
-- Mid-quarter Check-in: Week 6 of each quarter
+## Weekly Sessions
+- Strategy Sync [Weekly] https://meeting-link/strategy
+- Team Retrospectives [Weekly] https://meeting-link/retro
+- All-Hands Meeting [Weekly] https://meeting-link/all-hands
 
-### Reviews
-- Weekly OKR Progress Updates: Every Monday 10 AM
-- Monthly OKR Reviews: First Tuesday of each month
-- Quarterly OKR Retrospective: Last week of quarter
+## Bi-Weekly Reviews
+- Sprint Planning [Bi-weekly] https://meeting-link/sprint
+- Product Reviews [Bi-weekly] https://meeting-link/product
+- Security Reviews [Bi-weekly] https://meeting-link/security
 
-## Regular Meetings
-### Executive Team
-- Daily Standup: 9:00 AM EST
-- Weekly Strategy Sync: Wednesdays 2 PM EST
-- Monthly All-Hands: First Friday 11 AM EST
+## Monthly Check-ins
+- OKR Reviews [Monthly] https://meeting-link/okr
+- Financial Reports [Monthly] https://meeting-link/finance
+- Department Updates [Monthly] https://meeting-link/dept
 
-### Teams
-- Team Standups: Daily 10 AM local time
-- Sprint Planning: Every other Monday
-- Retrospectives: Every other Friday
-- 1:1 Meetings: Weekly, scheduled by managers
+## Quarterly Planning
+- Business Reviews [Quarterly] https://meeting-link/qbr
+- Strategy Planning [Quarterly] https://meeting-link/strategy-q
+- Budget Reviews [Quarterly] https://meeting-link/budget
 
-## Annual Cycles
-### Performance & Development
-- Annual Reviews: November 1-30
-- Mid-year Reviews: May 1-31
-- Career Development Plans: January 15-31
-- Compensation Adjustments: January 1
-
-### Planning
-- Strategic Planning: October 1-31
-- Budget Planning: September 1-30
-- Headcount Planning: August 15-31
-
-## Reporting Deadlines
-- Monthly Financial Reports: 5th of each month
-- Quarterly Investor Updates: 15th after quarter end
-- Annual Report: February 28
+## Annual Events
+- Performance Reviews [Yearly] https://meeting-link/reviews
+- Strategic Planning [Yearly] https://meeting-link/strategy-annual
+- Budget Planning [Yearly] https://meeting-link/budget-annual
