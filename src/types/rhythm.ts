@@ -1,4 +1,3 @@
-
 export interface RhythmItem {
   name: string;
   category: string;
@@ -26,3 +25,11 @@ export const TEAM_SIZE_TEMPLATES = [
   { label: "Team of 150-400", value: "team-150-400" },
   { label: "Team of 500+", value: "team-500-plus" }
 ];
+
+export interface RhythmDetail {
+  name: string;
+  category: string;
+  attendees: string;
+  duration: number;
+  frequency: string;
+}
