@@ -1,6 +1,13 @@
 
-import { useMemo } from "react";
-import defaultRhythm from "@/data/default-rhythm.md?raw";
+import { useMemo, useState } from "react";
+import { organizations } from "@/data/organizations";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const getRhythmData = (content: string) => {
   const lines = content.split('\n');
@@ -35,7 +42,10 @@ const getRhythmData = (content: string) => {
 };
 
 const Visualizer = () => {
-  const rhythmData = useMemo(() => getRhythmData(defaultRhythm), []);
+  const [selectedOrgId, setSelectedOrgId] = useState<string>(organizations[0].id);
+  const selectedOrg = organizations.find(org => org.id === selectedOrgId) || organizations[0];
+  
+  const rhythmData = useMemo(() => getRhythmData(selectedOrg.content), [selectedOrg]);
   const totalSections = rhythmData.length;
   const radius = 300;
   const center = radius + 100;
@@ -50,7 +60,24 @@ const Visualizer = () => {
 
   return (
     <div className="container max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-      <h1 className="text-2xl font-semibold text-gray-900 mb-8">{getHeaderInfo(defaultRhythm)} Visualizer</h1>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+        <h1 className="text-2xl font-semibold text-gray-900">{getHeaderInfo(selectedOrg.content)} Visualizer</h1>
+        <Select
+          value={selectedOrgId}
+          onValueChange={(value) => setSelectedOrgId(value)}
+        >
+          <SelectTrigger className="w-[280px] bg-white">
+            <SelectValue placeholder="Select organization" />
+          </SelectTrigger>
+          <SelectContent>
+            {organizations.map((org) => (
+              <SelectItem key={org.id} value={org.id}>
+                {getHeaderInfo(org.content)}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
       <div className="w-full overflow-x-auto">
         <svg width={size} height={size} className="mx-auto">
           {rhythmData.map((section, sectionIndex) => {
