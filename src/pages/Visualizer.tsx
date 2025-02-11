@@ -1,4 +1,9 @@
 
+/**
+ * Rhythm Analysis Page
+ * Displays and analyzes rhythm data with charts and tables
+ */
+
 import { useMemo, useState } from "react";
 import { organizations } from "@/data/organizations";
 import {
@@ -15,27 +20,33 @@ import { calculateTimeMetrics } from "@/utils/timeCalculations";
 import { getRhythmData, getHeaderInfo } from "@/utils/rhythmParser";
 
 const Visualizer = () => {
+  // State for organization selection and table sorting
   const [selectedOrgId, setSelectedOrgId] = useState<string>(organizations[0].id);
   const [sortColumn, setSortColumn] = useState<keyof RhythmDetail>("name");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
   
+  // Get selected organization and its rhythm data
   const selectedOrg = organizations.find(org => org.id === selectedOrgId);
   const rhythmData = selectedOrg ? getRhythmData(selectedOrg.content) : [];
   const timeMetrics = calculateTimeMetrics(rhythmData);
 
+  // Flatten rhythm data for table display
   const allRhythms = useMemo(() => {
     return rhythmData.flatMap(section => section.items);
   }, [rhythmData]);
 
+  // Sort rhythms based on selected column and direction
   const sortedRhythms = useMemo(() => {
     return [...allRhythms].sort((a, b) => {
       const aValue = a[sortColumn];
       const bValue = b[sortColumn];
       
+      // Handle numeric values
       if (typeof aValue === 'number' && typeof bValue === 'number') {
         return sortDirection === 'asc' ? aValue - bValue : bValue - aValue;
       }
       
+      // Handle string values
       const aString = String(aValue).toLowerCase();
       const bString = String(bValue).toLowerCase();
       return sortDirection === 'asc' 
@@ -44,6 +55,7 @@ const Visualizer = () => {
     });
   }, [allRhythms, sortColumn, sortDirection]);
 
+  // Handle column sorting
   const handleSort = (column: keyof RhythmDetail) => {
     if (sortColumn === column) {
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
@@ -55,6 +67,7 @@ const Visualizer = () => {
 
   return (
     <div className="container max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+      {/* Header section with organization selector */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <h1 className="text-2xl font-semibold text-gray-900">Data and Analysis</h1>
         <Select
@@ -74,6 +87,7 @@ const Visualizer = () => {
         </Select>
       </div>
 
+      {/* Rhythm details table */}
       <div className="mb-8">
         <RhythmTable
           rhythms={sortedRhythms}
@@ -83,6 +97,7 @@ const Visualizer = () => {
         />
       </div>
 
+      {/* Time analysis charts */}
       <div className="grid grid-cols-1 gap-8">
         <TimeChart 
           data={timeMetrics.monthly.data} 

@@ -1,4 +1,8 @@
 
+/**
+ * A component that displays rhythm details in a sortable table format
+ */
+
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -12,12 +16,16 @@ import { ArrowUpDown } from "lucide-react";
 import { RhythmDetail } from "@/types/rhythm";
 
 interface RhythmTableProps {
-  rhythms: RhythmDetail[];
-  sortColumn: keyof RhythmDetail;
-  sortDirection: "asc" | "desc";
-  onSort: (column: keyof RhythmDetail) => void;
+  rhythms: RhythmDetail[];           // Array of rhythm items to display
+  sortColumn: keyof RhythmDetail;    // Currently sorted column
+  sortDirection: "asc" | "desc";     // Sort direction
+  onSort: (column: keyof RhythmDetail) => void;  // Sort handler
 }
 
+/**
+ * RhythmTable Component
+ * Displays rhythm data in a table format with sortable columns
+ */
 export const RhythmTable = ({ 
   rhythms, 
   sortColumn, 
@@ -29,6 +37,7 @@ export const RhythmTable = ({
       <Table>
         <TableHeader>
           <TableRow>
+            {/* Name column header with sort button */}
             <TableHead>
               <Button
                 variant="ghost"
@@ -39,6 +48,7 @@ export const RhythmTable = ({
                 <ArrowUpDown className="h-4 w-4" />
               </Button>
             </TableHead>
+            {/* Category column header with sort button */}
             <TableHead>
               <Button
                 variant="ghost"
@@ -49,6 +59,7 @@ export const RhythmTable = ({
                 <ArrowUpDown className="h-4 w-4" />
               </Button>
             </TableHead>
+            {/* Attendees column header with sort button */}
             <TableHead>
               <Button
                 variant="ghost"
@@ -59,6 +70,7 @@ export const RhythmTable = ({
                 <ArrowUpDown className="h-4 w-4" />
               </Button>
             </TableHead>
+            {/* Duration column header with sort button */}
             <TableHead>
               <Button
                 variant="ghost"
@@ -69,6 +81,7 @@ export const RhythmTable = ({
                 <ArrowUpDown className="h-4 w-4" />
               </Button>
             </TableHead>
+            {/* Frequency column header with sort button */}
             <TableHead>
               <Button
                 variant="ghost"
@@ -81,6 +94,7 @@ export const RhythmTable = ({
             </TableHead>
           </TableRow>
         </TableHeader>
+        {/* Table body with rhythm data */}
         <TableBody>
           {rhythms.map((rhythm, index) => (
             <TableRow key={index}>

@@ -1,4 +1,9 @@
 
+/**
+ * A component that displays time-related data in a bar chart format
+ * using the Recharts library
+ */
+
 import {
   Card,
   CardContent,
@@ -17,11 +22,19 @@ import {
 } from 'recharts';
 
 interface TimeChartProps {
-  data: any[];
-  title: string;
-  total: number;
+  data: any[];       // Array of data points to display
+  title: string;     // Chart title
+  total: number;     // Total hours for display
 }
 
+/**
+ * TimeChart Component
+ * Displays a bar chart showing time distribution across categories
+ * 
+ * @param data - Array of data points with 'name' and 'hours' properties
+ * @param title - Title of the chart
+ * @param total - Total hours to display in the header
+ */
 export const TimeChart = ({ data, title, total }: TimeChartProps) => (
   <Card className="w-full">
     <CardHeader>
@@ -36,6 +49,7 @@ export const TimeChart = ({ data, title, total }: TimeChartProps) => (
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" />
+          {/* X-axis configuration with angled labels for better readability */}
           <XAxis 
             dataKey="name" 
             angle={-45}
@@ -43,9 +57,11 @@ export const TimeChart = ({ data, title, total }: TimeChartProps) => (
             height={70}
             interval={0}
           />
+          {/* Y-axis with hours label */}
           <YAxis label={{ value: 'Hours', angle: -90, position: 'insideLeft' }} />
           <Tooltip />
           <Legend />
+          {/* Bar configuration with custom color */}
           <Bar dataKey="hours" fill="#9b87f5" />
         </BarChart>
       </ResponsiveContainer>
