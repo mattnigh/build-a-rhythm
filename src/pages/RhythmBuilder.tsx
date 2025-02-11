@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -50,6 +49,7 @@ const RhythmBuilder = () => {
     link: ""
   });
   const [showCustomCategory, setShowCustomCategory] = useState(false);
+  const [showCustomFrequency, setShowCustomFrequency] = useState(false);
 
   const addRhythm = () => {
     if (!currentRhythm.name || !currentRhythm.category || !currentRhythm.attendees || !currentRhythm.duration || !currentRhythm.frequency) {
@@ -71,6 +71,7 @@ const RhythmBuilder = () => {
       link: ""
     });
     setShowCustomCategory(false);
+    setShowCustomFrequency(false);
     
     toast({
       title: "Rhythm Added",
@@ -230,10 +231,10 @@ const RhythmBuilder = () => {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Attendees
+                  Attendee Group
                 </label>
                 <Input
-                  placeholder="Enter attendees"
+                  placeholder="Enter attendee group"
                   value={currentRhythm.attendees}
                   onChange={(e) => setCurrentRhythm({ ...currentRhythm, attendees: e.target.value })}
                 />
@@ -252,21 +253,51 @@ const RhythmBuilder = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Frequency
                 </label>
-                <Select
-                  value={currentRhythm.frequency}
-                  onValueChange={(value) => setCurrentRhythm({ ...currentRhythm, frequency: value })}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select frequency" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {FREQUENCIES.map((freq) => (
-                      <SelectItem key={freq} value={freq}>
-                        {freq}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                {!showCustomFrequency ? (
+                  <div className="space-y-2">
+                    <Select
+                      value={currentRhythm.frequency}
+                      onValueChange={(value) => {
+                        if (value === "custom") {
+                          setShowCustomFrequency(true);
+                          setCurrentRhythm({ ...currentRhythm, frequency: "" });
+                        } else {
+                          setCurrentRhythm({ ...currentRhythm, frequency: value });
+                        }
+                      }}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select frequency" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {FREQUENCIES.map((freq) => (
+                          <SelectItem key={freq} value={freq}>
+                            {freq}
+                          </SelectItem>
+                        ))}
+                        <SelectItem value="custom">Add Custom Frequency</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    <Input
+                      placeholder="Enter custom frequency"
+                      value={currentRhythm.frequency}
+                      onChange={(e) => setCurrentRhythm({ ...currentRhythm, frequency: e.target.value })}
+                    />
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => {
+                        setShowCustomFrequency(false);
+                        setCurrentRhythm({ ...currentRhythm, frequency: "" });
+                      }}
+                    >
+                      Use Predefined Frequency
+                    </Button>
+                  </div>
+                )}
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
