@@ -135,19 +135,21 @@ const RhythmBuilder = () => {
 
   const loadTemplate = async (templateSize: string) => {
     try {
-      console.log('Loading template:', templateSize); // Debug log
-      const templatePath = `/build-a-rhythm/templates/team-${templateSize}.md`;
-      console.log('Template path:', templatePath); // Debug log
+      console.log('Loading template:', templateSize);
+      // Use window.location.origin to get the base URL in production
+      const baseUrl = import.meta.env.PROD ? '/build-a-rhythm' : '';
+      const templatePath = `${baseUrl}/templates/team-${templateSize}.md`;
+      console.log('Template path:', templatePath);
       
       const response = await fetch(templatePath);
-      console.log('Response status:', response.status); // Debug log
+      console.log('Response status:', response.status);
       
       if (!response.ok) {
         throw new Error(`Failed to load template: ${response.statusText}`);
       }
       
       const templateContent = await response.text();
-      console.log('Template content length:', templateContent.length); // Debug log
+      console.log('Template content length:', templateContent.length);
       
       const lines = templateContent.split('\n');
       const rhythmsToAdd: RhythmItem[] = [];
