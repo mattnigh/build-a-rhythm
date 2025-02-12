@@ -9,24 +9,63 @@
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
+
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
+
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
+
     --primary: 262.1 83.3% 57.8%;
     --primary-foreground: 210 40% 98%;
+
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
+
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
+
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
+
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
+
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 262.1 83.3% 57.8%;
+
     --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 262.1 83.3% 57.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
   }
 }
 
@@ -36,24 +75,20 @@
   }
 
   body {
-    @apply bg-white text-gray-900 transition-colors duration-300;
+    @apply bg-background text-foreground;
     font-family: 'Inter', sans-serif;
-  }
-
-  #root {
-    @apply min-h-screen bg-white;
   }
 }
 
 @layer components {
   .prose-rhythm {
     @apply prose
-      prose-headings:text-gray-900
+      prose-headings:text-gray-900 
       prose-h1:text-3xl prose-h1:font-bold prose-h1:mb-4
       prose-h2:text-2xl prose-h2:font-semibold prose-h2:mb-3
       prose-h3:text-xl prose-h3:font-medium prose-h3:mb-2
       prose-p:text-gray-600 prose-p:leading-relaxed
-      prose-a:text-primary prose-a:no-underline hover:prose-a:text-primary/90
+      prose-a:text-rhythm-600 prose-a:no-underline hover:prose-a:text-rhythm-700
       prose-strong:text-gray-900 prose-strong:font-semibold
       prose-ul:list-disc prose-ul:pl-6
       prose-ol:list-decimal prose-ol:pl-6

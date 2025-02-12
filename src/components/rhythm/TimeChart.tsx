@@ -19,7 +19,6 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-  TooltipProps,
 } from 'recharts';
 
 interface TimeChartProps {
@@ -27,21 +26,6 @@ interface TimeChartProps {
   title: string;     // Chart title
   total: number;     // Total hours for display
 }
-
-// Custom tooltip component for dark mode support
-const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
-  if (active && payload && payload.length) {
-    return (
-      <div className="rounded-lg border bg-popover p-2 shadow-md">
-        <p className="text-sm font-semibold text-foreground">{label}</p>
-        <p className="text-sm text-primary">
-          hours : {payload[0].value}
-        </p>
-      </div>
-    );
-  }
-  return null;
-};
 
 /**
  * TimeChart Component
@@ -72,16 +56,10 @@ export const TimeChart = ({ data, title, total }: TimeChartProps) => (
             textAnchor="end"
             height={70}
             interval={0}
-            stroke="currentColor"
-            className="text-muted-foreground"
           />
           {/* Y-axis with hours label */}
-          <YAxis 
-            label={{ value: 'Hours', angle: -90, position: 'insideLeft' }} 
-            stroke="currentColor"
-            className="text-muted-foreground"
-          />
-          <Tooltip content={<CustomTooltip />} />
+          <YAxis label={{ value: 'Hours', angle: -90, position: 'insideLeft' }} />
+          <Tooltip />
           <Legend />
           {/* Bar configuration with custom color */}
           <Bar dataKey="hours" fill="#9b87f5" />

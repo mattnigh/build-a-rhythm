@@ -10,40 +10,40 @@ interface OrganizationHeaderProps {
 
 const OrganizationHeader = ({ name, details = [] }: OrganizationHeaderProps) => {
   const getIcon = (type: string) => {
-    if (type.toLowerCase().includes('repo')) return <GitBranch className="w-4 h-4 text-primary" />;
-    if (type.toLowerCase().includes('slack')) return <MessageSquare className="w-4 h-4 text-primary" />;
-    return <Link2 className="w-4 h-4 text-primary" />;
+    if (type.toLowerCase().includes('repo')) return <GitBranch className="w-4 h-4 text-rhythm-600" />;
+    if (type.toLowerCase().includes('slack')) return <MessageSquare className="w-4 h-4 text-rhythm-600" />;
+    return <Link2 className="w-4 h-4 text-rhythm-600" />;
   };
 
   return (
-    <Card className="w-full bg-card border shadow-sm p-6 animate-fade-in">
+    <Card className="w-full bg-white/50 backdrop-blur-sm border-0 shadow-sm mb-8 p-6 animate-fade-in">
       <div className="space-y-4">
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-secondary rounded-lg">
-            <Building2 className="w-6 h-6 text-primary" />
+          <div className="p-2 bg-rhythm-100 rounded-lg">
+            <Building2 className="w-6 h-6 text-rhythm-600" />
           </div>
           <div>
-            <p className="text-sm font-medium text-muted-foreground">Organization/Team</p>
-            <h1 className="text-2xl font-semibold text-foreground">{name}</h1>
+            <p className="text-sm font-medium text-rhythm-600">Organization/Team</p>
+            <h1 className="text-2xl font-semibold text-gray-900">{name}</h1>
           </div>
         </div>
 
         {details.length > 0 && (
-          <div className="pt-4 border-t border-border">
-            <h2 className="text-sm font-medium text-muted-foreground mb-3">Org Details</h2>
+          <div className="pt-4 border-t border-gray-100">
+            <h2 className="text-sm font-medium text-gray-700 mb-3">Org Details</h2>
             <div className="space-y-2">
               {details.map((detail, index) => (
                 <div key={index} className="flex items-center gap-3">
-                  <div className="p-1.5 bg-secondary rounded">
+                  <div className="p-1.5 bg-rhythm-50 rounded">
                     {getIcon(detail.type)}
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-muted-foreground">{detail.type}</p>
+                    <p className="text-sm font-medium text-gray-600">{detail.type}</p>
                     <a
                       href={detail.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm text-primary hover:text-primary/90 hover:underline"
+                      className="text-sm text-rhythm-600 hover:text-rhythm-700 hover:underline"
                     >
                       {detail.url}
                     </a>
@@ -59,3 +59,4 @@ const OrganizationHeader = ({ name, details = [] }: OrganizationHeaderProps) => 
 };
 
 export default OrganizationHeader;
+

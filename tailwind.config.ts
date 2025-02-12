@@ -2,6 +2,7 @@
 import type { Config } from "tailwindcss";
 
 export default {
+  darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
@@ -98,18 +99,18 @@ export default {
         DEFAULT: {
           css: {
             maxWidth: '65ch',
-            color: 'var(--tw-prose-body)',
+            color: '#111827',
             '[class~="lead"]': {
-              color: 'var(--tw-prose-lead)',
+              color: '#374151',
             },
             a: {
-              color: 'var(--tw-prose-links)',
+              color: '#111827',
               '&:hover': {
-                color: 'var(--tw-prose-links-hover)',
+                color: '#374151',
               },
             },
             strong: {
-              color: 'var(--tw-prose-bold)',
+              color: '#111827',
             },
             'ol[type="A"]': {
               '--list-counter-style': 'upper-alpha',

@@ -69,12 +69,12 @@ const Visualizer = () => {
     <div className="container max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
       {/* Header section with organization selector */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-        <h1 className="text-2xl font-semibold text-[#9b87f5]">Data and Analysis</h1>
+        <h1 className="text-2xl font-semibold text-gray-900">Data and Analysis</h1>
         <Select
           value={selectedOrgId}
           onValueChange={(value) => setSelectedOrgId(value)}
         >
-          <SelectTrigger className="w-[280px] bg-card border-input">
+          <SelectTrigger className="w-[280px] bg-white">
             <SelectValue placeholder="Select organization" />
           </SelectTrigger>
           <SelectContent>
