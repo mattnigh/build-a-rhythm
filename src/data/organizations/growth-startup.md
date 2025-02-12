@@ -2,6 +2,7 @@
 # Growth Startup - Marketing Rhythm
 
 ### Organization Details
+- People Manager: Ramon "Phantom Phreak" Sanchez
 - Team Repos: https://github.com/growth-startup
 - Slack Channels: https://growth-startup.slack.com/channels/marketing
 - Documentation: https://confluence.growth-startup.com

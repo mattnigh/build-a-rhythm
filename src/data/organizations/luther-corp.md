@@ -2,6 +2,7 @@
 # Luther Corp - Business Rhythm
 
 ### Organization Details
+- People Manager: Kate "Acid Burn" Libby
 - Team Repos: https://github.com/luther-corp
 - Slack Channels: https://luther-corp.slack.com/channels/team
 - Documentation: https://docs.luther-corp.com

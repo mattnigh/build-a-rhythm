@@ -1,6 +1,6 @@
 
 import { Card } from "@/components/ui/card";
-import { Building2, GitBranch, MessageSquare, Link2 } from "lucide-react";
+import { Building2, GitBranch, MessageSquare, Link2, User2 } from "lucide-react";
 import { OrgDetail } from "@/types/rhythm";
 
 interface OrganizationHeaderProps {
@@ -10,10 +10,18 @@ interface OrganizationHeaderProps {
 
 const OrganizationHeader = ({ name, details = [] }: OrganizationHeaderProps) => {
   const getIcon = (type: string) => {
+    if (type.toLowerCase().includes('people manager')) return <User2 className="w-4 h-4 text-rhythm-600" />;
     if (type.toLowerCase().includes('repo')) return <GitBranch className="w-4 h-4 text-rhythm-600" />;
     if (type.toLowerCase().includes('slack')) return <MessageSquare className="w-4 h-4 text-rhythm-600" />;
     return <Link2 className="w-4 h-4 text-rhythm-600" />;
   };
+
+  // Sort details to put People Manager first
+  const sortedDetails = [...details].sort((a, b) => {
+    if (a.type.toLowerCase().includes('people manager')) return -1;
+    if (b.type.toLowerCase().includes('people manager')) return 1;
+    return 0;
+  });
 
   return (
     <Card className="w-full bg-white/50 backdrop-blur-sm border-0 shadow-sm mb-8 p-6 animate-fade-in">
@@ -28,11 +36,11 @@ const OrganizationHeader = ({ name, details = [] }: OrganizationHeaderProps) => 
           </div>
         </div>
 
-        {details.length > 0 && (
+        {sortedDetails.length > 0 && (
           <div className="pt-4 border-t border-gray-100">
             <h2 className="text-sm font-medium text-gray-700 mb-3">Org Details</h2>
             <div className="space-y-2">
-              {details.map((detail, index) => (
+              {sortedDetails.map((detail, index) => (
                 <div key={index} className="flex items-center gap-3">
                   <div className="p-1.5 bg-rhythm-50 rounded">
                     {getIcon(detail.type)}
@@ -59,4 +67,3 @@ const OrganizationHeader = ({ name, details = [] }: OrganizationHeaderProps) => 
 };
 
 export default OrganizationHeader;
-

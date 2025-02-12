@@ -2,6 +2,7 @@
 # Tech Startup - Engineering Rhythm
 
 ### Organization Details
+- People Manager: Dade "Crash Override" Murphy
 - Team Repos: https://github.com/tech-startup
 - Slack Channels: https://tech-startup.slack.com/channels/eng
 - Documentation: https://notion.tech-startup.com
