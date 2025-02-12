@@ -93,6 +93,7 @@ const Home = () => {
               <li>Set meeting frequencies (daily, weekly, monthly, etc.)</li>
               <li>Add any relevant meeting links or additional notes</li>
               <li>Review and export your rhythm as a markdown file</li>
+              <li>To add your team to the app simply add or replace your MD file in the repo's /data/organizations directory</li>
             </ol>
           </CardContent>
         </Card>

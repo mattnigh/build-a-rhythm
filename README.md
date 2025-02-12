@@ -1,69 +1,54 @@
-# Welcome to your Lovable project
+# Rhythm Minder
 
-## Project info
+**Rhythm Minder** is a comprehensive tool for managing and visualizing your team's meeting rhythms. It helps you organize your meeting schedules, analyze how much time your team spends in meetings, and build custom meeting rhythms that match your organization's needs.
 
-**URL**: https://lovable.dev/projects/efd30ec3-7d72-4d9c-805c-4bde79fef89e
+## Features
 
-## How can I edit this code?
+1. **Team Rhythms**  
+   - View and manage your team's meeting schedules.
+   - See a detailed overview of attendees, duration, and frequency.
+   - Organize meetings by category (e.g., Strategic, Tactical, One-on-Ones).
 
-There are several ways of editing your application.
+2. **Rhythm Visualizer**  
+   - Analyze meeting time distribution with interactive charts.
+   - Gain insights into monthly, quarterly, or annual meeting allocations.
+   - Filter and view breakdowns by category for deeper analysis.
 
-**Use Lovable**
+3. **Rhythm Builder**  
+   - Create new meeting rhythms from scratch or use provided templates.
+   - Customize meeting details (title, attendees, duration).
+   - Set recurring frequencies (daily, weekly, monthly).
+   - Add relevant links or notes and export your final rhythm.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/efd30ec3-7d72-4d9c-805c-4bde79fef89e) and start prompting.
+## How to Use Rhythm Builder
 
-Changes made via Lovable will be committed automatically to this repo.
+1. **Upload or Start From Scratch**  
+   - Upload an existing rhythm file, or create one from a blank template.
 
-**Use your preferred IDE**
+2. **Choose a Template (Optional)**  
+   - Select a recommended template based on your team size if you prefer guided setup.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+3. **Enter Organization Details**  
+   - Provide your organization's name and any relevant contextual information.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+4. **Customize Meeting Details**  
+   - Define meeting titles, add attendees, and set durations.
 
-Follow these steps:
+5. **Organize Meetings by Category**  
+   - Group meetings under categories like Strategic, Tactical, or One-on-ones.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+6. **Set Frequencies**  
+   - Schedule meetings to recur on a daily, weekly, or monthly basis.
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+7. **Add Links & Notes**  
+   - Attach meeting links, agendas, or extra notes to each meeting entry.
 
-# Step 3: Install the necessary dependencies.
-npm i
+8. **Review & Export**  
+   - Once satisfied, export your meeting rhythm as a markdown file for easy sharing.
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+## License
 
-**Edit a file directly in GitHub**
+[MIT](LICENSE) – You’re free to use, modify, and distribute this software as long as you include the original license.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with .
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/efd30ec3-7d72-4d9c-805c-4bde79fef89e) and click on Share -> Publish.
-
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+---
+**Happy Rhythm Building!**
