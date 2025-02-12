@@ -9,63 +9,24 @@
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
-
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
-
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-
     --primary: 262.1 83.3% 57.8%;
     --primary-foreground: 210 40% 98%;
-
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
-
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
-
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
-
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 262.1 83.3% 57.8%;
-
     --radius: 0.75rem;
-  }
-
-  .dark {
-    --background: 215 28% 7%;
-    --foreground: 213 31% 91%;
-
-    --card: 215 28% 11%;
-    --card-foreground: 213 31% 91%;
-
-    --popover: 215 28% 11%;
-    --popover-foreground: 213 31% 91%;
-
-    --primary: 212 72% 45%;
-    --primary-foreground: 213 31% 91%;
-
-    --secondary: 215 25% 15%;
-    --secondary-foreground: 213 31% 91%;
-
-    --muted: 215 25% 15%;
-    --muted-foreground: 215 20% 65%;
-
-    --accent: 215 25% 15%;
-    --accent-foreground: 213 31% 91%;
-
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 213 31% 91%;
-
-    --border: 215 28% 13%;
-    --input: 215 28% 13%;
-    --ring: 212 72% 45%;
   }
 }
 
@@ -75,27 +36,27 @@
   }
 
   body {
-    @apply bg-background text-foreground transition-colors duration-300;
+    @apply bg-white text-gray-900 transition-colors duration-300;
     font-family: 'Inter', sans-serif;
   }
 
   #root {
-    @apply min-h-screen bg-background;
+    @apply min-h-screen bg-white;
   }
 }
 
 @layer components {
   .prose-rhythm {
     @apply prose
-      prose-headings:text-foreground
+      prose-headings:text-gray-900
       prose-h1:text-3xl prose-h1:font-bold prose-h1:mb-4
       prose-h2:text-2xl prose-h2:font-semibold prose-h2:mb-3
       prose-h3:text-xl prose-h3:font-medium prose-h3:mb-2
-      prose-p:text-muted-foreground prose-p:leading-relaxed
+      prose-p:text-gray-600 prose-p:leading-relaxed
       prose-a:text-primary prose-a:no-underline hover:prose-a:text-primary/90
-      prose-strong:text-foreground prose-strong:font-semibold
+      prose-strong:text-gray-900 prose-strong:font-semibold
       prose-ul:list-disc prose-ul:pl-6
       prose-ol:list-decimal prose-ol:pl-6
-      prose-li:text-muted-foreground prose-li:my-1;
+      prose-li:text-gray-600 prose-li:my-1;
   }
 }
