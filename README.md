@@ -1,6 +1,6 @@
-# Rhythm Minder
+# 📆 Rhythm Minder
 
-**Rhythm Minder** is a comprehensive tool for managing and visualizing your team's meeting rhythms. It helps you organize your meeting schedules, analyze how much time your team spends in meetings, and build custom meeting rhythms that match your organization's needs.
+**Rhythm Minder** is a comprehensive tool for managing and visualizing your team's rhythm of business. It helps you organize your meeting schedules, analyze how much time your team spends in meetings, and build custom meeting rhythms that match your organization's needs.
 
 ## Features
 
@@ -22,29 +22,21 @@
 
 ## How to Use Rhythm Builder
 
-1. **Upload or Start From Scratch**  
-   - Upload an existing rhythm file, or create one from a blank template.
+1. **Upload or Start From Scratch:** Upload an existing rhythm file, or create one from a blank template.
 
-2. **Choose a Template (Optional)**  
-   - Select a recommended template based on your team size if you prefer guided setup.
+2. **Choose a Template (Optional):** Select a recommended template based on your team size if you prefer guided setup.
 
-3. **Enter Organization Details**  
-   - Provide your organization's name and any relevant contextual information.
+3. **Enter Organization Details:** Provide your organization's name and any relevant contextual information.
 
-4. **Customize Meeting Details**  
-   - Define meeting titles, add attendees, and set durations.
+4. **Customize Meeting Details:** Define meeting titles, add attendees, and set durations.
 
-5. **Organize Meetings by Category**  
-   - Group meetings under categories like Strategic, Tactical, or One-on-ones.
+5. **Organize Meetings by Category:** Group meetings under categories like Strategic, Tactical, or One-on-ones.
 
-6. **Set Frequencies**  
-   - Schedule meetings to recur on a daily, weekly, or monthly basis.
+6. **Set Frequencies:** Schedule meetings to recur on a daily, weekly, or monthly basis.
 
-7. **Add Links & Notes**  
-   - Attach meeting links, agendas, or extra notes to each meeting entry.
+7. **Add Links & Notes:** Attach meeting links, agendas, or extra notes to each meeting entry.
 
-8. **Review & Export**  
-   - Once satisfied, export your meeting rhythm as a markdown file for easy sharing.
+8. **Review & Export:** Once satisfied, export your meeting rhythm as a markdown file for easy sharing.
 
 ## License
 
