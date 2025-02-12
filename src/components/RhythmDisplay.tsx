@@ -83,7 +83,20 @@ const RhythmDisplay = ({ content }: RhythmDisplayProps) => {
                 <div key={itemIndex} className="flex items-start gap-2">
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
-                      <p className="text-foreground font-medium">{item.text}</p>
+                      <div className="flex items-center gap-2">
+                        <p className="text-foreground font-medium">{item.text}</p>
+                        {item.link && (
+                          <a
+                            href={item.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-primary hover:text-primary/90 transition-colors"
+                            title="Open meeting link"
+                          >
+                            <ExternalLink className="w-4 h-4" />
+                          </a>
+                        )}
+                      </div>
                       <span className="text-sm text-primary font-medium">
                         {item.attendees}
                       </span>
@@ -99,17 +112,6 @@ const RhythmDisplay = ({ content }: RhythmDisplayProps) => {
                       </div>
                     </div>
                   </div>
-                  {item.link && (
-                    <a
-                      href={item.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-primary hover:text-primary/90 transition-colors"
-                      title="Open meeting link"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                    </a>
-                  )}
                 </div>
               ))}
             </div>
