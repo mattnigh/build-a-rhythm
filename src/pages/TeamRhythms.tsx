@@ -29,7 +29,7 @@ const TeamRhythms = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-rhythm-50 via-white to-rhythm-50">
       <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 animate-fade-in-slow">
-        <div className="flex justify-end pt-4">
+        <div className="flex justify-start pt-4">
           <Select
             value={selectedOrgId}
             onValueChange={(value) => setSelectedOrgId(value)}
