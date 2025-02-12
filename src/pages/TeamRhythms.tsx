@@ -27,8 +27,8 @@ const TeamRhythms = () => {
   const orgDetails = parseOrgDetails(selectedOrg.content);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-rhythm-50 via-white to-rhythm-50">
-      <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 animate-fade-in-slow">
+    <div className="min-h-screen bg-background">
+      <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 py-8 animate-fade-in-slow">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <OrganizationHeader 
             name={getHeaderInfo(selectedOrg.content)} 
@@ -38,7 +38,7 @@ const TeamRhythms = () => {
             value={selectedOrgId}
             onValueChange={(value) => setSelectedOrgId(value)}
           >
-            <SelectTrigger className="w-[280px] bg-white">
+            <SelectTrigger className="w-[280px] bg-card">
               <SelectValue placeholder="Select organization" />
             </SelectTrigger>
             <SelectContent>
@@ -57,4 +57,3 @@ const TeamRhythms = () => {
 };
 
 export default TeamRhythms;
-
