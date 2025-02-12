@@ -99,18 +99,18 @@ export default {
         DEFAULT: {
           css: {
             maxWidth: '65ch',
-            color: '#111827',
+            color: 'var(--tw-prose-body)',
             '[class~="lead"]': {
-              color: '#374151',
+              color: 'var(--tw-prose-lead)',
             },
             a: {
-              color: '#111827',
+              color: 'var(--tw-prose-links)',
               '&:hover': {
-                color: '#374151',
+                color: 'var(--tw-prose-links-hover)',
               },
             },
             strong: {
-              color: '#111827',
+              color: 'var(--tw-prose-bold)',
             },
             'ol[type="A"]': {
               '--list-counter-style': 'upper-alpha',
