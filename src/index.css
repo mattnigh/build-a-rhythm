@@ -39,33 +39,33 @@
   }
 
   .dark {
-    --background: 220 15% 12%;
-    --foreground: 210 20% 98%;
+    --background: 215 28% 7%;
+    --foreground: 213 31% 91%;
 
-    --card: 220 18% 16%;
-    --card-foreground: 210 20% 98%;
+    --card: 215 28% 11%;
+    --card-foreground: 213 31% 91%;
 
-    --popover: 220 18% 16%;
-    --popover-foreground: 210 20% 98%;
+    --popover: 215 28% 11%;
+    --popover-foreground: 213 31% 91%;
 
-    --primary: 230 65% 65%;
-    --primary-foreground: 210 20% 98%;
+    --primary: 212 72% 45%;
+    --primary-foreground: 213 31% 91%;
 
-    --secondary: 220 15% 20%;
-    --secondary-foreground: 210 20% 98%;
+    --secondary: 215 25% 15%;
+    --secondary-foreground: 213 31% 91%;
 
-    --muted: 220 15% 20%;
-    --muted-foreground: 217 15% 65%;
+    --muted: 215 25% 15%;
+    --muted-foreground: 215 20% 65%;
 
-    --accent: 220 15% 20%;
-    --accent-foreground: 210 20% 98%;
+    --accent: 215 25% 15%;
+    --accent-foreground: 213 31% 91%;
 
-    --destructive: 0 60% 40%;
-    --destructive-foreground: 210 20% 98%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 213 31% 91%;
 
-    --border: 220 15% 20%;
-    --input: 220 15% 20%;
-    --ring: 230 65% 65%;
+    --border: 215 28% 13%;
+    --input: 215 28% 13%;
+    --ring: 212 72% 45%;
   }
 }
 
@@ -92,7 +92,7 @@
       prose-h2:text-2xl prose-h2:font-semibold prose-h2:mb-3
       prose-h3:text-xl prose-h3:font-medium prose-h3:mb-2
       prose-p:text-muted-foreground prose-p:leading-relaxed
-      prose-a:text-rhythm-600 prose-a:no-underline hover:prose-a:text-rhythm-700
+      prose-a:text-primary prose-a:no-underline hover:prose-a:text-primary/90
       prose-strong:text-foreground prose-strong:font-semibold
       prose-ul:list-disc prose-ul:pl-6
       prose-ol:list-decimal prose-ol:pl-6
