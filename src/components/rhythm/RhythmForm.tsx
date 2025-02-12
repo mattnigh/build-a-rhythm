@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card } from "@/components/ui/card";
 import { Plus } from "lucide-react";
-import { CATEGORIES, generateMarkdown } from "@/utils/rhythmUtils";
+import { CATEGORIES } from "@/utils/rhythmUtils";
 import { FREQUENCIES, RhythmItem } from "@/types/rhythm";
 
 interface RhythmFormProps {
@@ -27,22 +27,23 @@ const RhythmForm = ({
   addRhythm
 }: RhythmFormProps) => {
   return (
-    <Card className="p-6 space-y-6">
+    <Card className="p-6 space-y-6 bg-card border shadow-sm">
       <div className="space-y-4">
-        <h2 className="text-xl font-semibold text-gray-900">Add New Rhythm</h2>
+        <h2 className="text-xl font-semibold text-foreground">Add New Rhythm</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-muted-foreground mb-1.5">
               Meeting Name
             </label>
             <Input
               placeholder="Enter meeting name"
               value={currentRhythm.name}
               onChange={(e) => setCurrentRhythm({ ...currentRhythm, name: e.target.value })}
+              className="bg-background"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-muted-foreground mb-1.5">
               Category
             </label>
             {!showCustomCategory ? (
@@ -58,7 +59,7 @@ const RhythmForm = ({
                     }
                   }}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-background">
                     <SelectValue placeholder="Select category" />
                   </SelectTrigger>
                   <SelectContent>
@@ -77,6 +78,7 @@ const RhythmForm = ({
                   placeholder="Enter custom category"
                   value={currentRhythm.category}
                   onChange={(e) => setCurrentRhythm({ ...currentRhythm, category: e.target.value })}
+                  className="bg-background"
                 />
                 <Button
                   variant="ghost"
@@ -92,27 +94,29 @@ const RhythmForm = ({
             )}
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-muted-foreground mb-1.5">
               Attendee Group
             </label>
             <Input
               placeholder="Enter attendee group"
               value={currentRhythm.attendees}
               onChange={(e) => setCurrentRhythm({ ...currentRhythm, attendees: e.target.value })}
+              className="bg-background"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-muted-foreground mb-1.5">
               Duration (e.g., 60 min)
             </label>
             <Input
               placeholder="Enter duration"
               value={currentRhythm.duration}
               onChange={(e) => setCurrentRhythm({ ...currentRhythm, duration: e.target.value })}
+              className="bg-background"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-muted-foreground mb-1.5">
               Frequency
             </label>
             {!showCustomFrequency ? (
@@ -128,7 +132,7 @@ const RhythmForm = ({
                     }
                   }}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-background">
                     <SelectValue placeholder="Select frequency" />
                   </SelectTrigger>
                   <SelectContent>
@@ -147,6 +151,7 @@ const RhythmForm = ({
                   placeholder="Enter custom frequency"
                   value={currentRhythm.frequency}
                   onChange={(e) => setCurrentRhythm({ ...currentRhythm, frequency: e.target.value })}
+                  className="bg-background"
                 />
                 <Button
                   variant="ghost"
@@ -162,13 +167,14 @@ const RhythmForm = ({
             )}
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-muted-foreground mb-1.5">
               Meeting Link (optional)
             </label>
             <Input
               placeholder="Enter meeting link"
               value={currentRhythm.link}
               onChange={(e) => setCurrentRhythm({ ...currentRhythm, link: e.target.value })}
+              className="bg-background"
             />
           </div>
         </div>

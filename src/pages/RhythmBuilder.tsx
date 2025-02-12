@@ -60,7 +60,6 @@ const RhythmBuilder = () => {
   };
 
   const addRhythm = () => {
-    // Remove validation for other fields, only check organization name
     if (!currentRhythm.name) {
       toast({
         title: "Missing Name",
@@ -125,11 +124,11 @@ const RhythmBuilder = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-rhythm-50 via-white to-rhythm-50 p-8">
-      <div className="container max-w-4xl mx-auto space-y-8">
-        <div className="space-y-4">
-          <h1 className="text-3xl font-bold text-gray-900">Rhythm Builder</h1>
-          <p className="text-gray-600">Create and export your organization's rhythm of business</p>
+    <div className="min-h-screen bg-background">
+      <div className="container max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        <div className="space-y-2">
+          <h1 className="text-3xl font-bold text-foreground">Rhythm Builder</h1>
+          <p className="text-muted-foreground">Create and export your organization's rhythm of business</p>
         </div>
 
         <FileUpload onFileUpload={handleFileUpload} />
