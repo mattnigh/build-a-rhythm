@@ -67,7 +67,7 @@ const FileUpload = ({ onFileUpload }: FileUploadProps) => {
     <Card
       className={`w-full p-8 border-2 border-dashed transition-colors duration-300 ${
         isDragging
-          ? "border-rhythm-400 bg-rhythm-50"
+          ? "border-rhythm-400 bg-rhythm-50/10"
           : "border-gray-200 hover:border-rhythm-300"
       } cursor-pointer animate-fade-in`}
       onDragOver={handleDragOver}
@@ -76,12 +76,12 @@ const FileUpload = ({ onFileUpload }: FileUploadProps) => {
       onClick={() => fileInputRef.current?.click()}
     >
       <div className="flex flex-col items-center justify-center gap-4">
-        <div className="p-3 bg-rhythm-100 rounded-full">
+        <div className="p-3 bg-rhythm-100/10 rounded-full">
           <Upload className="w-6 h-6 text-rhythm-600" />
         </div>
         <div className="text-center">
-          <h3 className="text-lg font-semibold text-gray-900">Upload Rhythm File</h3>
-          <p className="text-sm text-gray-500 mt-1">
+          <h3 className="text-lg font-semibold text-foreground">Upload Rhythm File</h3>
+          <p className="text-sm text-muted-foreground mt-1">
             Drag and drop your markdown file here, or click to browse
           </p>
         </div>
@@ -98,4 +98,3 @@ const FileUpload = ({ onFileUpload }: FileUploadProps) => {
 };
 
 export default FileUpload;
-
