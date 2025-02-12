@@ -77,7 +77,8 @@ const Home = () => {
           </Card>
         </div>
 
-        {/* Getting Started Guide */}
+        {/* 
+         */}
         <Card className="mt-12 border-border">
           <CardHeader>
             <CardTitle>How to Use Rhythm Builder</CardTitle>
