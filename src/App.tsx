@@ -14,6 +14,7 @@ import NotFound from "./pages/NotFound";
 import { ThemeToggle } from "./components/ThemeToggle";
 
 const queryClient = new QueryClient();
+const isProduction = import.meta.env.PROD;
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -25,7 +26,7 @@ const App = () => (
           </div>
           <Toaster />
           <Sonner />
-          <BrowserRouter basename="/build-a-rhythm">
+          <BrowserRouter basename={isProduction ? "/build-a-rhythm" : "/"}>
             <Navigation />
             <Routes>
               <Route path="/" element={<Home />} />
