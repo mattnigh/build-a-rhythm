@@ -29,11 +29,13 @@ const TeamRhythms = () => {
   return (
     <div className="min-h-screen bg-background">
       <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 py-8 animate-fade-in-slow">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <OrganizationHeader 
-            name={getHeaderInfo(selectedOrg.content)} 
-            details={orgDetails}
-          />
+        <OrganizationHeader 
+          name={getHeaderInfo(selectedOrg.content)} 
+          details={orgDetails}
+        />
+        
+        <div className="flex items-center gap-3 pb-2">
+          <span className="text-sm font-medium text-muted-foreground">Select Org/Team</span>
           <Select
             value={selectedOrgId}
             onValueChange={(value) => setSelectedOrgId(value)}
@@ -50,6 +52,7 @@ const TeamRhythms = () => {
             </SelectContent>
           </Select>
         </div>
+
         <RhythmDisplay content={selectedOrg.content} />
       </div>
     </div>

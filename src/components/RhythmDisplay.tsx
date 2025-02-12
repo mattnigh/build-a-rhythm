@@ -16,15 +16,15 @@ interface RhythmItem {
 }
 
 const categoryIcons: { [key: string]: React.ReactNode } = {
-  "Planning": <Target className="w-5 h-5 text-rhythm-600" />,
-  "Business Reviews": <Clock className="w-5 h-5 text-rhythm-600" />,
-  "Team Meetings": <Users className="w-5 h-5 text-rhythm-600" />,
-  "Product Sessions": <Target className="w-5 h-5 text-rhythm-600" />,
-  "Strategy & Leadership": <Calendar className="w-5 h-5 text-rhythm-600" />,
-  "Technical Sessions": <Target className="w-5 h-5 text-rhythm-600" />,
-  "Design & Innovation": <Target className="w-5 h-5 text-rhythm-600" />,
-  "Growth & Marketing": <Target className="w-5 h-5 text-rhythm-600" />,
-  "Customer Success": <Users className="w-5 h-5 text-rhythm-600" />,
+  "Planning": <Target className="w-5 h-5 text-primary" />,
+  "Business Reviews": <Clock className="w-5 h-5 text-primary" />,
+  "Team Meetings": <Users className="w-5 h-5 text-primary" />,
+  "Product Sessions": <Target className="w-5 h-5 text-primary" />,
+  "Strategy & Leadership": <Calendar className="w-5 h-5 text-primary" />,
+  "Technical Sessions": <Target className="w-5 h-5 text-primary" />,
+  "Design & Innovation": <Target className="w-5 h-5 text-primary" />,
+  "Growth & Marketing": <Target className="w-5 h-5 text-primary" />,
+  "Customer Success": <Users className="w-5 h-5 text-primary" />,
 };
 
 const RhythmDisplay = ({ content }: RhythmDisplayProps) => {
@@ -65,39 +65,30 @@ const RhythmDisplay = ({ content }: RhythmDisplayProps) => {
   }, [content]);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {sections.map((section, index) => (
         <Card 
           key={index} 
-          className="overflow-hidden hover:shadow-lg transition-shadow duration-300 bg-white/80 backdrop-blur-sm border-0"
+          className="bg-card border shadow-sm p-6 animate-fade-in"
         >
-          <div className="p-6">
+          <div className="space-y-4">
             <div className="flex items-center gap-3 mb-4">
-              {categoryIcons[section.title] || <Calendar className="w-5 h-5 text-rhythm-600" />}
-              <h2 className="text-xl font-semibold text-gray-900">{section.title}</h2>
+              <div className="p-2 bg-secondary rounded-lg">
+                {categoryIcons[section.title] || <Calendar className="w-5 h-5 text-primary" />}
+              </div>
+              <h2 className="text-xl font-semibold text-foreground">{section.title}</h2>
             </div>
             <div className="space-y-3">
               {section.content.map((item, itemIndex) => (
-                <div key={itemIndex} className="flex items-start gap-2 group">
-                  {item.link && (
-                    <a
-                      href={item.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-rhythm-600 transition-opacity mt-1"
-                      title="Open meeting link"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                    </a>
-                  )}
+                <div key={itemIndex} className="flex items-start gap-2">
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
-                      <p className="text-gray-800">{item.text}</p>
-                      <span className="text-sm text-rhythm-600 font-medium">
+                      <p className="text-foreground font-medium">{item.text}</p>
+                      <span className="text-sm text-primary font-medium">
                         {item.attendees}
                       </span>
                     </div>
-                    <div className="flex items-center gap-3 text-sm text-gray-500 mt-1">
+                    <div className="flex items-center gap-3 text-sm text-muted-foreground mt-1">
                       <div className="flex items-center gap-1">
                         <Clock3 className="w-3 h-3" />
                         <span>{item.duration}</span>
@@ -108,6 +99,17 @@ const RhythmDisplay = ({ content }: RhythmDisplayProps) => {
                       </div>
                     </div>
                   </div>
+                  {item.link && (
+                    <a
+                      href={item.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary hover:text-primary/90 transition-colors"
+                      title="Open meeting link"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
+                  )}
                 </div>
               ))}
             </div>
